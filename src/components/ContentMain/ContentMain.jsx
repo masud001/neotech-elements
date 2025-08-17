@@ -72,14 +72,6 @@ const ContentMain = () => {
         <ChemicalsList data={data} loading={loading} error={error} />
       </ChemicalsSection>
       
-      {/* Temporary test element to verify scrolling */}
-      <TestScrollSection>
-        <h3>Test Scrolling</h3>
-        <p>This is a test element to verify that scrolling is working properly.</p>
-        <div style={{ height: '100vh', background: 'linear-gradient(to bottom, #29221d, #473b33)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-          <h2>Scroll down to see this content!</h2>
-        </div>
-      </TestScrollSection>
     </MainContentHolder>
   );
 };
