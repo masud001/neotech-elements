@@ -401,13 +401,6 @@ export const GlobalStyles = createGlobalStyle`
     will-change: auto;
   }
 
-  /* Debug styles to ensure scrolling works */
-  .debug-scroll {
-    /* Ensure content can scroll */
-    min-height: 200vh;
-    background: linear-gradient(to bottom, #1e1611 0%, #29221d 100%);
-  }
-
   /* Ensure root element allows scrolling */
   #root {
     /* Allow scrolling */
