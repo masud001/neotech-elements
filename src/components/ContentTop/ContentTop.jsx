@@ -20,9 +20,9 @@ const ContentTop = () => {
   };
 
   const handleHeaderClick = (e) => {
-    // Only collapse sidebar on mobile devices (less than 768px)
+    
     if (!isDesktop) {
-      // Only collapse if clicking on the header itself, not on buttons
+      
       if (e.target === e.currentTarget || e.target.closest('.dashboard-header')) {
         collapseSidebar();
       }
