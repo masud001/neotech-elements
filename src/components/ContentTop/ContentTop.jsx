@@ -23,7 +23,7 @@ const ContentTop = () => {
     <>
       <MainContentTop className="dashboard-header">
         <ContentTopLeft>
-          <SidebarToggler type="button" onClick={() => toggleSidebar()}>
+          <SidebarToggler type="button" onClick={() => toggleSidebar()} className="sidebar-toggler">
             <MenuIcon src={iconsImgs.menu} alt="Toggle sidebar" />
           </SidebarToggler>
           <ContentTopTitle>Home</ContentTopTitle>
