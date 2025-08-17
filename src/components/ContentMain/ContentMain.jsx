@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback, memo, useMemo } from "react";
 import styled from "styled-components";
 import DashboardMetrics from "../DashboardMetrics/DashboardMetrics";
 import ChemicalsList from "../ChemicalsList/ChemicalsList";
@@ -6,75 +6,80 @@ import { MonthlyUsageChart, HazardDistributionChart, ComplianceTrackingChart } f
 import { useChemicalData } from "../../hooks/useChemicalData";
 import { useSidebar } from "../../context/SidebarContext";
 
-const ContentMain = () => {
+const ContentMain = memo(() => {
   const { data, loading, error } = useChemicalData();
   const { isSidebarOpen } = useSidebar();
   const containerRef = useRef(null);
 
-  // Handle container resize for charts
+  // Optimized resize handler with useCallback
+  const handleResize = useCallback(() => {
+    // Trigger window resize event to update all charts
+    window.dispatchEvent(new Event('resize'));
+  }, []);
+
+  // Handle container resize for charts with optimized ResizeObserver
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const resizeObserver = new ResizeObserver(() => {
-      // Trigger window resize event to update all charts
-      window.dispatchEvent(new Event('resize'));
-    });
-
+    const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(containerRef.current);
 
     return () => {
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [handleResize]);
 
-  // Trigger chart resize when sidebar toggles
+  // Optimized chart resize when sidebar toggles
   useEffect(() => {
-    // Multiple resize events to ensure charts update properly
-    const timer1 = setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 100);
+    // Single optimized resize event with proper timing
+    const timer = setTimeout(() => {
+      handleResize();
+    }, 150); // Reduced from multiple timers to single optimized timer
     
-    const timer2 = setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 300);
-    
-    const timer3 = setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 500);
-    
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-    };
-  }, [isSidebarOpen]);
+    return () => clearTimeout(timer);
+  }, [isSidebarOpen, handleResize]);
+
+  // Memoize sections to prevent unnecessary re-renders
+  const dashboardSection = useMemo(() => (
+    <DashboardSection>
+      <DashboardMetrics data={data} loading={loading} error={error} />
+    </DashboardSection>
+  ), [data, loading, error]);
+
+  const monthlyUsageSection = useMemo(() => (
+    <MonthlyUsageSection>
+      <MonthlyUsageChart data={data} loading={loading} error={error} />
+    </MonthlyUsageSection>
+  ), [data, loading, error]);
+
+  const chartsSection = useMemo(() => (
+    <DoubleChartSection>
+      <ChartColumn>
+        <HazardDistributionChart data={data} loading={loading} error={error} />
+      </ChartColumn>
+      <ChartColumn>
+        <ComplianceTrackingChart data={data} loading={loading} error={error} />
+      </ChartColumn>
+    </DoubleChartSection>
+  ), [data, loading, error]);
+
+  const chemicalsSection = useMemo(() => (
+    <ChemicalsSection>
+      <ChemicalsList data={data} loading={loading} error={error} />
+    </ChemicalsSection>
+  ), [data, loading, error]);
 
   return (
     <MainContentHolder ref={containerRef} className='main-content-holder'>
-      <DashboardSection>
-        <DashboardMetrics data={data} loading={loading} error={error} />
-      </DashboardSection>
-      
-      <MonthlyUsageSection>
-        <MonthlyUsageChart data={data} loading={loading} error={error} />
-      </MonthlyUsageSection>
-      
-      <DoubleChartSection>
-        <ChartColumn>
-          <HazardDistributionChart data={data} loading={loading} error={error} />
-        </ChartColumn>
-        <ChartColumn>
-          <ComplianceTrackingChart data={data} loading={loading} error={error} />
-        </ChartColumn>
-      </DoubleChartSection>
-      
-      <ChemicalsSection>
-        <ChemicalsList data={data} loading={loading} error={error} />
-      </ChemicalsSection>
-      
+      {dashboardSection}
+      {monthlyUsageSection}
+      {chartsSection}
+      {chemicalsSection}
     </MainContentHolder>
   );
-};
+});
+
+ContentMain.displayName = 'ContentMain';
 
 // Styled Components
 const MainContentHolder = styled.div`

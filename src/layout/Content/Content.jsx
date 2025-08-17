@@ -1,8 +1,24 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, Suspense, lazy } from 'react';
 import styled from 'styled-components';
 import ContentTop from '../../components/ContentTop/ContentTop';
 import ContentMain from '../../components/ContentMain/ContentMain';
 import { SidebarContext } from '../../context/SidebarContext';
+import { LoadingSpinner } from '../../components/UI';
+
+// Lazy load ContentMain for better performance
+const LazyContentMain = lazy(() => import('../../components/ContentMain/ContentMain'));
+
+// Styled loading fallback container
+const LoadingFallbackContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  width: 100%;
+  background: ${({ theme }) => theme.colors.primaryLight};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  margin: ${({ theme }) => theme.spacing.lg} 0;
+`;
 
 // Styled Components
 const MainContent = styled.div`
@@ -14,20 +30,13 @@ const MainContent = styled.div`
   padding-left: ${({ theme }) => theme.layout.content.padding.default};
   padding-bottom: ${({ theme }) => theme.layout.content.padding.default};
   transition: ${({ theme }) => theme.transitions.default};
-  min-width: 0; /* Allow content to shrink below flex-basis */
-  
-  /* Remove conflicting scroll properties - let body handle scrolling */
-  /* overflow-x: hidden; */ /* Removed - conflicts with body */
-  /* height: 100vh; */ /* Removed - conflicts with body scroll */
-  /* overflow-y: auto; */ /* Removed - conflicts with body scroll */
-  
-  /* Performance optimizations */
+  min-width: 0;
   will-change: auto;
-  
-  /* Prevent layout shift */
   min-height: 100vh;
   
-  /* Ensure charts resize properly when sidebar toggles */
+  /* Performance optimizations */
+  contain: layout style paint;
+  
   .chart-container,
   canvas {
     transition: ${({ theme }) => theme.transitions.default};
@@ -60,13 +69,26 @@ const MainContent = styled.div`
   }
 `;
 
+// Loading fallback component for ContentMain
+const ContentMainFallback = () => (
+  <LoadingFallbackContainer>
+    <LoadingSpinner 
+      size="large" 
+      color="primary" 
+      text="Loading dashboard content..." 
+    />
+  </LoadingFallbackContainer>
+);
+
 const Content = memo(() => {
   const { isSidebarOpen } = useContext(SidebarContext);
   
   return (
     <MainContent className={!isSidebarOpen ? 'sidebar-collapsed' : 'main-content'}>
       <ContentTop />
-      <ContentMain />
+      <Suspense fallback={<ContentMainFallback />}>
+        <LazyContentMain />
+      </Suspense>
     </MainContent>
   );
 });
