@@ -74,7 +74,9 @@ const ErrorMessage = ({
 };
 
 // Styled Components
-const ErrorContainer = styled.div`
+const ErrorContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['size', 'variant'].includes(prop)
+})`
   display: flex;
   align-items: flex-start;
   gap: ${({ theme, size }) => {
@@ -131,7 +133,9 @@ const ErrorContainer = styled.div`
   }
 `;
 
-const ErrorIcon = styled.span`
+const ErrorIcon = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['size'].includes(prop)
+})`
   font-size: ${({ theme, size }) => {
     switch (size) {
       case 'small': return theme.typography.fontSize.lg;
@@ -159,7 +163,9 @@ const ErrorContent = styled.div`
   gap: ${({ theme }) => theme.spacing.sm};
 `;
 
-const ErrorTitle = styled.h3`
+const ErrorTitle = styled.h3.withConfig({
+  shouldForwardProp: (prop) => !['size', 'variant'].includes(prop)
+})`
   margin: 0;
   font-size: ${({ theme, size }) => {
     switch (size) {
@@ -193,7 +199,9 @@ const ErrorTitle = styled.h3`
   }
 `;
 
-const ErrorMessageText = styled.p`
+const ErrorMessageText = styled.p.withConfig({
+  shouldForwardProp: (prop) => !['size'].includes(prop)
+})`
   margin: 0;
   font-size: ${({ theme, size }) => {
     switch (size) {
@@ -216,7 +224,9 @@ const ErrorMessageText = styled.p`
   }
 `;
 
-const RetryButton = styled.button`
+const RetryButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => !['size', 'variant'].includes(prop)
+})`
   align-self: flex-start;
   background: ${({ theme, variant }) => {
     switch (variant) {

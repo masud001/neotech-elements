@@ -35,7 +35,9 @@ const SearchInput = ({
 };
 
 // Styled Components
-const StyledSearchInput = styled.input`
+const StyledSearchInput = styled.input.withConfig({
+  shouldForwardProp: (prop) => !['width', 'size', 'variant'].includes(prop)
+})`
   background: ${({ theme }) => theme.colors.primaryLight};
   border: 1px solid ${({ theme }) => theme.colors.jet};
   border-radius: ${({ theme }) => theme.borderRadius.md};

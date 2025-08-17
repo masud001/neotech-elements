@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { useContext } from 'react';
 import ContentTop from '../../components/ContentTop/ContentTop';
 import ContentMain from '../../components/ContentMain/ContentMain';
+import { SidebarContext } from '../../context/SidebarContext';
 
 // Styled Components
 const MainContent = styled.div`
@@ -28,11 +30,24 @@ const MainContent = styled.div`
     padding-right: ${({ theme }) => theme.layout.content.padding.md};
     padding-left: ${({ theme }) => theme.layout.content.padding.md};
   }
+  
+  
+  
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-left: 200px; /* Even smaller sidebar on small screens */
+  }
+  
+  /* Sidebar collapsed state */
+  &.sidebar-collapsed {
+    margin-left: 0;
+  }
 `;
 
 const Content = () => {
+  const { isSidebarOpen } = useContext(SidebarContext);
+  
   return (
-    <MainContent>
+    <MainContent className={!isSidebarOpen ? 'sidebar-collapsed' : ''}>
       <ContentTop />
       <ContentMain />
     </MainContent>

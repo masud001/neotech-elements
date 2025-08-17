@@ -507,7 +507,9 @@ const InventoryTable = styled.table`
   }
 `;
 
-const HazardBadge = styled.span`
+const HazardBadge = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['hazardType'].includes(prop)
+})`
   background: ${({ theme, hazardType }) => {
     switch (hazardType) {
       case 'Flammable':
@@ -552,7 +554,9 @@ const HazardBadge = styled.span`
   }};
 `;
 
-const StatusBadge = styled.span`
+const StatusBadge = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['isActive'].includes(prop)
+})`
   background: ${({ theme, isActive }) => 
     isActive ? `${theme.colors.green}20` : `${theme.colors.scarlet}20`
   };

@@ -175,7 +175,7 @@ export const theme = {
         collapsed: '24px 16px',
         mobile: '12px'
       },
-      height: '600px',
+      height: '100px',
       scrollbar: {
         width: '4px',
         borderRadius: '18px'

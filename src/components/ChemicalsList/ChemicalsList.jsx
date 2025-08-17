@@ -260,7 +260,9 @@ const StockUnit = styled.span`
   }
 `;
 
-const HazardLevel = styled.div`
+const HazardLevel = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['hazardType'].includes(prop)
+})`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs};
@@ -297,7 +299,9 @@ const HazardLevel = styled.div`
   }
 `;
 
-const HazardIcon = styled.span`
+const HazardIcon = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['hazardType'].includes(prop)
+})`
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   color: ${({ theme, hazardType }) => {
     switch (hazardType) {
@@ -327,7 +331,9 @@ const HazardText = styled.span`
   }
 `;
 
-const SDSStatus = styled.div`
+const SDSStatus = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['isActive'].includes(prop)
+})`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs};
@@ -346,7 +352,9 @@ const SDSStatus = styled.div`
   }
 `;
 
-const StatusIcon = styled.span`
+const StatusIcon = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['isActive'].includes(prop)
+})`
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   color: ${({ theme, isActive }) => 
     isActive ? theme.colors.green : theme.colors.scarlet

@@ -57,7 +57,9 @@ const Button = ({
 };
 
 // Styled Components
-const StyledButton = styled.button`
+const StyledButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => !['active', 'variant', 'size'].includes(prop)
+})`
   display: inline-flex;
   align-items: center;
   justify-content: center;

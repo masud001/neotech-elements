@@ -58,7 +58,9 @@ const MetricTitle = styled.h3`
   letter-spacing: 0.5px;
 `;
 
-const MetricIcon = styled.div`
+const MetricIcon = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['variant'].includes(prop)
+})`
   width: 40px;
   height: 40px;
   border-radius: ${({ theme }) => theme.borderRadius.full};
@@ -104,7 +106,9 @@ const MetricSubtext = styled.p`
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
 `;
 
-const MetricTrend = styled.div`
+const MetricTrend = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['isPositive'].includes(prop)
+})`
   display: flex;
   align-items: center;
   margin-top: ${({ theme }) => theme.spacing.md};

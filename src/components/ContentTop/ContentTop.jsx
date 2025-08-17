@@ -60,6 +60,13 @@ const ContentTop = () => {
 
 // Styled Components
 const MainContentTop = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: ${({ theme }) => theme.zIndex.header || 100};
+  background: ${({ theme }) => theme.colors.secondary};
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.primaryLight};
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
