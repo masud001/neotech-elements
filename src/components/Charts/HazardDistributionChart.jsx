@@ -305,14 +305,20 @@ const HazardDistributionChart = ({ data, loading, error }) => {
 
   if (!data || !data.reports || !data.reports.hazardDistribution) {
     return (
-      <ChartContainer>
-        <ChartHeader>
-          <ChartTitle>Hazard Classification Distribution</ChartTitle>
-        </ChartHeader>
-        <NoDataContainer>
-          No hazard distribution data available
-        </NoDataContainer>
-      </ChartContainer>
+      <NoDataContainer>
+        <div>No hazard distribution data available</div>
+        <div style={{ fontSize: '12px', marginTop: '8px', opacity: 0.7 }}>
+          {!data ? 'No data received' : 
+           !data.reports ? 'No reports data' : 
+           !data.reports.hazardDistribution ? 'No hazard distribution data' : 'Unknown error'}
+        </div>
+        {data && (
+          <div style={{ fontSize: '10px', marginTop: '4px', opacity: 0.5 }}>
+            Available data keys: {Object.keys(data).join(', ')}
+            {data.reports && ` | Reports keys: ${Object.keys(data.reports).join(', ')}`}
+          </div>
+        )}
+      </NoDataContainer>
     );
   }
 

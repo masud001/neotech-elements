@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Ensure proper positioning context for fixed elements */
+  position: relative;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 :root {
   --clr-primary: #29221d;
   --clr-primar-light: #473b33;
@@ -31,6 +38,14 @@ body {
   overflow-x: hidden;
   /* Ensure proper sticky positioning context */
   position: relative;
+  /* Ensure body handles all scrolling */
+  height: 100vh;
+  overflow-y: auto;
+  /* Ensure sidebar fixed positioning works */
+  transform: translateZ(0);
+  /* Additional positioning context */
+  position: relative;
+  min-height: 100vh;
 }
 
 ul {
@@ -76,13 +91,55 @@ button {
 .app {
   display: flex;
   min-height: 100vh;
-  overflow-x: hidden;
+  /* Ensure proper positioning context for fixed sidebar */
+  position: relative;
 }
 
-/* Main content area adjustment for fixed sidebar */
+/* Sticky sidebar positioning */
+.app .sidebar {
+  position: -webkit-sticky; /* Safari support */
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1005;
+  /* Ensure sidebar stays in place */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Main content area adjustment for sticky sidebar */
 .app > div:last-child {
-  margin-left: 260px;
   transition: margin-left 300ms ease-in-out;
+  /* Ensure content flows naturally with sticky sidebar */
+  position: relative;
+  z-index: 1;
+}
+
+/* Sidebar collapsed state - content adjustment */
+.app > div:last-child.sidebar-collapsed {
+  margin-left: 72px; /* Account for collapsed sidebar width */
+}
+
+/* Sidebar collapsed state styling */
+.app .sidebar.sidebar-change {
+  margin-left: -260px;
+  transform: translateX(-260px);
+}
+
+/* Responsive sidebar collapsed states */
+@media screen and (max-width: 1200px) {
+  .app .sidebar.sidebar-change {
+    margin-left: -72px;
+    transform: translateX(-72px);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .app .sidebar.sidebar-change {
+    margin-left: -72px;
+    transform: translateX(-72px);
+  }
 }
 
 /* Sidebar collapsed state */
@@ -95,37 +152,35 @@ button {
   position: -webkit-sticky !important; /* Safari support */
   position: sticky !important;
   top: 0 !important;
-  z-index: 1000 !important;
+  z-index: 1010 !important;
   /* Ensure proper sticky behavior */
   will-change: transform;
   /* Add subtle shadow for visual separation */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Ensure content scrolls properly under sticky header */
-.app > div:last-child {
+/* Remove conflicting scroll properties */
+/* .app > div:last-child {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-}
+} */
 
-/* Responsive adjustments for fixed sidebar */
+/* Responsive adjustments for sticky sidebar */
 @media screen and (max-width: 1200px) {
-  .app > div:last-child {
-    margin-left: 72px;
-  }
+
   
   .app > div:last-child.sidebar-collapsed {
-    margin-left: 0;
+    margin-left: 0; /* No sidebar on mobile when collapsed */
   }
 }
 
 @media screen and (max-width: 420px) {
   .app > div:last-child {
-    margin-left: 0;
+    margin-left: 0; /* No sidebar on very small screens */
   }
   
   .app > div:last-child.sidebar-collapsed {
-    margin-left: 0;
+    margin-left: 0; /* No sidebar on very small screens when collapsed */
   }
 }
 

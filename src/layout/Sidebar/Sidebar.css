@@ -4,18 +4,24 @@
   width: 260px;
   padding: 36px 20px;
   transition: var(--transition-default);
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   height: 100vh;
   overflow-y: auto;
-  z-index: 1000;
   display: flex;
   flex-direction: column;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   will-change: transform;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  /* Ensure sidebar stays sticky above content but below header */
+  z-index: 1005;
+  /* Force hardware acceleration and ensure sticky positioning */
+  transform: translateZ(0);
+  /* Additional sticky positioning properties */
+  position: -webkit-sticky; /* Safari support */
+  position: sticky;
 }
 .user-info {
   display: flex;
@@ -60,6 +66,8 @@
 }
 .sidebar-change {
   margin-left: -260px;
+  /* Ensure collapsed state works with sticky positioning */
+  transform: translateX(-260px);
 }
 
 .nav-item {
@@ -102,7 +110,8 @@
 @media screen and (max-width: 1400px) {
   .sidebar {
     padding: 24px 16px;
-    position: fixed;
+    position: -webkit-sticky; /* Safari support */
+    position: sticky;
     top: 0;
     left: 0;
     height: 100vh;
@@ -114,13 +123,16 @@
     width: 72px;
     padding-left: 12px;
     padding-right: 12px;
-    position: fixed;
+    position: -webkit-sticky; /* Safari support */
+    position: sticky;
     top: 0;
     left: 0;
     height: 100vh;
   }
   .sidebar-change {
     margin-left: -72px;
+    /* Ensure collapsed state works with sticky positioning */
+    transform: translateX(-72px);
   }
   .info-name {
     display: none;
@@ -152,12 +164,15 @@
 @media screen and (max-width: 420px) {
   .sidebar {
     margin-left: -72px;
-    position: fixed;
+    position: -webkit-sticky; /* Safari support */
+    position: sticky;
     top: 0;
     left: 0;
     height: 100vh;
   }
   .sidebar-change {
     margin-left: -72px;
+    /* Ensure collapsed state works with sticky positioning */
+    transform: translateX(-72px);
   }
 }

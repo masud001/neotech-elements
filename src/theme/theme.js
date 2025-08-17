@@ -231,11 +231,14 @@ export const theme = {
   zIndex: {
     base: 0,
     dropdown: 1000,
+    sidebar: 1005,
+    header: 1010,
     sticky: 1020,
     fixed: 1030,
-    modal: 1040,
-    popover: 1050,
-    tooltip: 1060
+    modal: 9998,
+    popover: 1060,
+    tooltip: 1070,
+    loading: 9999
   }
 };
 

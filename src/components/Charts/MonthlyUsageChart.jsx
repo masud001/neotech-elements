@@ -340,14 +340,20 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
 
   if (!data || !data.reports || !data.reports.monthlyUsage) {
     return (
-      <ChartContainer>
-        <ChartHeader>
-          <ChartTitle>Monthly Chemical Usage & Incidents</ChartTitle>
-        </ChartHeader>
-        <NoDataContainer>
-          No monthly usage data available
-        </NoDataContainer>
-      </ChartContainer>
+      <NoDataContainer>
+        <div>No monthly usage data available</div>
+        <div style={{ fontSize: '12px', marginTop: '8px', opacity: 0.7 }}>
+          {!data ? 'No data received' : 
+           !data.reports ? 'No reports data' : 
+           !data.reports.monthlyUsage ? 'No monthly usage data' : 'Unknown error'}
+        </div>
+        {data && (
+          <div style={{ fontSize: '10px', marginTop: '4px', opacity: 0.5 }}>
+            Available data keys: {Object.keys(data).join(', ')}
+            {data.reports && ` | Reports keys: ${Object.keys(data.reports).join(', ')}`}
+          </div>
+        )}
+      </NoDataContainer>
     );
   }
 

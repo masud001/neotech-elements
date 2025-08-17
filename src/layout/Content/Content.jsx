@@ -1,5 +1,5 @@
+import React, { useContext, memo } from 'react';
 import styled from 'styled-components';
-import { useContext } from 'react';
 import ContentTop from '../../components/ContentTop/ContentTop';
 import ContentMain from '../../components/ContentMain/ContentMain';
 import { SidebarContext } from '../../context/SidebarContext';
@@ -15,9 +15,18 @@ const MainContent = styled.div`
   padding-bottom: ${({ theme }) => theme.layout.content.padding.default};
   transition: ${({ theme }) => theme.transitions.default};
   min-width: 0; /* Allow content to shrink below flex-basis */
-  overflow-x: hidden; /* Prevent horizontal scrollbar */
-  height: 100vh; /* Full height for proper scroll context */
-  overflow-y: auto; /* Enable vertical scrolling */
+  
+  /* Remove conflicting scroll properties - let body handle scrolling */
+  /* overflow-x: hidden; */ /* Removed - conflicts with body */
+  /* height: 100vh; */ /* Removed - conflicts with body scroll */
+  /* overflow-y: auto; */ /* Removed - conflicts with body scroll */
+  
+  /* Performance optimizations */
+  contain: layout style paint;
+  will-change: auto;
+  
+  /* Prevent layout shift */
+  min-height: 100vh;
   
   /* Ensure charts resize properly when sidebar toggles */
   .chart-container,
@@ -25,6 +34,9 @@ const MainContent = styled.div`
     transition: ${({ theme }) => theme.transitions.default};
     max-width: 100%;
     box-sizing: border-box;
+    /* Performance optimizations */
+    contain: layout style paint;
+    will-change: auto;
   }
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints['2xl']}) {
@@ -37,13 +49,21 @@ const MainContent = styled.div`
     padding-left: ${({ theme }) => theme.layout.content.padding.md};
   }
   
+  /* Mobile performance optimizations */
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    /* Reduce layout shift on mobile */
+    contain: layout style paint;
+    /* Prevent layout shift */
+    min-height: 100vh;
+  }
+  
   /* Sidebar collapsed state - handled by App.css now */
   &.sidebar-collapsed {
     /* Margin adjustment handled by App.css */
   }
 `;
 
-const Content = () => {
+const Content = memo(() => {
   const { isSidebarOpen } = useContext(SidebarContext);
   
   return (
@@ -52,6 +72,8 @@ const Content = () => {
       <ContentMain />
     </MainContent>
   );
-};
+});
+
+Content.displayName = 'Content';
 
 export default Content;

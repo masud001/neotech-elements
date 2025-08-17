@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 import styled from 'styled-components';
-import { LoadingSpinner } from '../UI';
-import { useChemicalData } from '../../hooks/useChemicalData';
+import useChemicalData from '../../hooks/useChemicalData';
 
 // Styled Components
 const MetricsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${({ theme }) => theme.spacing['2xl']};
+  padding-top: ${({ theme }) => theme.spacing.md};
   margin-bottom: ${({ theme }) => theme.spacing['4xl']};
+  
+  /* Performance optimizations */
+  contain: layout style paint;
+  will-change: auto;
+  
+  /* Prevent layout shift */
+  min-height: 200px;
   
   @media screen and (min-width: 1540px) {
     grid-template-columns: repeat(4, 1fr);
@@ -26,7 +33,6 @@ const MetricsContainer = styled.div`
   }
 `;
 
-
 const MetricCard = styled.div`
   background: ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
@@ -34,6 +40,13 @@ const MetricCard = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.sm};
   border: 1px solid ${({ theme }) => theme.colors.primaryLight};
   transition: ${({ theme }) => theme.transitions.default};
+  
+  /* Performance optimizations */
+  contain: layout style paint;
+  will-change: auto;
+  
+  /* Prevent layout shift */
+  min-height: 120px;
   
   &:hover {
     transform: translateY(-2px);
@@ -47,6 +60,9 @@ const MetricHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: ${({ theme }) => theme.spacing.lg};
+  
+  /* Prevent layout shift */
+  min-height: 2.5rem;
 `;
 
 const MetricTitle = styled.h3`
@@ -56,6 +72,9 @@ const MetricTitle = styled.h3`
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  
+  /* Prevent layout shift */
+  line-height: 1.2;
 `;
 
 const MetricIcon = styled.div.withConfig({
@@ -90,6 +109,9 @@ const MetricIcon = styled.div.withConfig({
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  
+  /* Prevent layout shift */
+  flex-shrink: 0;
 `;
 
 const MetricValue = styled.div`
@@ -97,6 +119,10 @@ const MetricValue = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
   font-weight: ${({ theme }) => theme.typography.fontWeight.extrabold};
   margin-bottom: ${({ theme }) => theme.spacing.sm};
+  
+  /* Prevent layout shift */
+  line-height: 1.2;
+  min-height: 2.5rem;
 `;
 
 const MetricSubtext = styled.div`
@@ -104,48 +130,50 @@ const MetricSubtext = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   margin-bottom: ${({ theme }) => theme.spacing.md};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
+  
+  /* Prevent layout shift */
+  line-height: 1.4;
+  min-height: 1.5rem;
 `;
 
-const MetricTrend = styled.div`
+const MetricTrendStyled = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs};
-  color: ${({ theme, isPositive }) => 
-    isPositive ? theme.colors.silverV1 : theme.colors.silverV1};
+  color: ${({ theme, $isPositive }) => 
+    $isPositive ? theme.colors.silverV1 : theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  
+  /* Prevent layout shift */
+  line-height: 1.4;
+  min-height: 1.5rem;
 `;
+
+const MetricTrend = ({ isPositive, children, ...props }) => (
+  <MetricTrendStyled $isPositive={isPositive} {...props}>
+    {children}
+  </MetricTrendStyled>
+);
 
 const TrendIcon = styled.span`
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  
+  /* Prevent layout shift */
+  flex-shrink: 0;
 `;
 
 const LoadingContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
-  padding: ${({ theme }) => theme.spacing['6xl']};
+  height: 200px;
+  background: ${({ theme }) => theme.colors.primaryLight};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
-  text-align: center;
-  background: ${({ theme }) => theme.colors.primary};
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  margin-bottom: ${({ theme }) => theme.spacing['4xl']};
-  box-shadow: ${({ theme }) => theme.shadows.sm};
-  border: 1px solid ${({ theme }) => theme.colors.primaryLight};
-  
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    min-height: 300px;
-    padding: ${({ theme }) => theme.spacing['4xl']};
-  }
-  
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    min-height: 250px;
-    padding: ${({ theme }) => theme.spacing['3xl']};
-  }
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const ErrorContainer = styled.div`
@@ -161,6 +189,7 @@ const ErrorContainer = styled.div`
 
 const DashboardMetrics = () => {
   const { data, loading, error, dataSource } = useChemicalData();
+
 
   // Date formatting function
   const formatDate = (dateString) => {
@@ -180,11 +209,7 @@ const DashboardMetrics = () => {
   if (loading) {
     return (
       <LoadingContainer>
-        <LoadingSpinner 
-          size="large" 
-          color="primary" 
-          text="Loading dashboard metrics..." 
-        />
+        <div>Loading dashboard metrics...</div>
       </LoadingContainer>
     );
   }
@@ -282,8 +307,6 @@ const DashboardMetrics = () => {
 
   return (
     <>
-     
-      
       <MetricsContainer className='dashboard-metrics-container'>
         {metrics.map((metric, index) => (
           <MetricCard key={index}>
@@ -308,4 +331,4 @@ const DashboardMetrics = () => {
   );
 };
 
-export default DashboardMetrics;
+export default memo(DashboardMetrics);

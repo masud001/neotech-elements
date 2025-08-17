@@ -62,7 +62,7 @@ const ContentTop = () => {
 const MainContentTop = styled.div`
   position: sticky;
   top: 0;
-  z-index: ${({ theme }) => theme.zIndex.header || 1000};
+  z-index: ${({ theme }) => theme.zIndex.header};
   background: ${({ theme }) => theme.colors.secondary};
   backdrop-filter: blur(10px);
   border-bottom: 1px solid ${({ theme }) => theme.colors.primaryLight};
@@ -82,7 +82,6 @@ const MainContentTop = styled.div`
   transform: translateZ(0); /* Force hardware acceleration */
   
   /* Ensure proper background */
-  background: ${({ theme }) => theme.colors.secondary};
   background: ${({ theme }) => `linear-gradient(180deg, ${theme.colors.secondary} 0%, ${theme.colors.secondary} 95%, transparent 100%)`};
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {

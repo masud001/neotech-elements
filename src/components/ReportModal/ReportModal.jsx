@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { MonthlyUsageChart, HazardDistributionChart, ComplianceTrackingChart } from '../Charts';
 import { LoadingSpinner, ErrorMessage } from '../UI';
@@ -34,7 +35,7 @@ const ReportModal = ({ isOpen, onClose, data, loading, error }) => {
   };
 
   if (loading) {
-    return (
+    const loadingModal = (
       <ModalOverlay onClick={handleBackdropClick}>
         <ModalContent>
           <LoadingSpinner 
@@ -45,10 +46,11 @@ const ReportModal = ({ isOpen, onClose, data, loading, error }) => {
         </ModalContent>
       </ModalOverlay>
     );
+    return ReactDOM.createPortal(loadingModal, document.body);
   }
 
   if (error) {
-    return (
+    const errorModal = (
       <ModalOverlay onClick={handleBackdropClick}>
         <ModalContent>
           <ErrorMessage 
@@ -59,11 +61,12 @@ const ReportModal = ({ isOpen, onClose, data, loading, error }) => {
         </ModalContent>
       </ModalOverlay>
     );
+    return ReactDOM.createPortal(errorModal, document.body);
   }
 
-  return (
-    <ModalOverlay onClick={handleBackdropClick}>
-      <ModalContent>
+  const mainModal = (
+    <ModalOverlay className='report-modal-overlay' onClick={handleBackdropClick}>
+      <ModalContent className='report-modal'>
         <ModalHeader>
           <ModalTitle>Chemical Safety Dashboard Report</ModalTitle>
           <CloseButton onClick={onClose} aria-label="Close report">
@@ -189,6 +192,9 @@ const ReportModal = ({ isOpen, onClose, data, loading, error }) => {
       </ModalContent>
     </ModalOverlay>
   );
+
+  // Render modal to body using React Portal
+  return ReactDOM.createPortal(mainModal, document.body);
 };
 
 // Helper function to get primary hazard
@@ -215,6 +221,31 @@ const ModalOverlay = styled.div`
   z-index: ${({ theme }) => theme.zIndex.modal};
   padding: ${({ theme }) => theme.spacing.md};
   backdrop-filter: blur(4px);
+  
+  /* Ensure perfect centering on all devices */
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    align-items: center !important;
+    justify-content: center !important;
+    padding: ${({ theme }) => theme.spacing.sm};
+  }
+  
+  /* Additional centering safeguards */
+  align-items: center !important;
+  justify-content: center !important;
+  
+  /* Ensure modal appears above everything except loading */
+  z-index: 9998 !important;
+  
+  /* Perfect centering for all screen sizes */
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    align-items: center !important;
+    justify-content: center !important;
+  }
 `;
 
 const ModalContent = styled.div`
@@ -228,6 +259,11 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   animation: modalSlideIn 0.3s ease-out;
+  
+  /* Ensure perfect centering */
+  margin: auto;
+  align-self: center;
+  justify-self: center;
 
   @keyframes modalSlideIn {
     from {
@@ -253,8 +289,7 @@ const ModalContent = styled.div`
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 100vw;
-    height: 100vh;
-    max-height: 85vh;
+    max-height: 90vh;
     border-radius: 0;
   }
 `;
@@ -304,8 +339,8 @@ const CloseButton = styled.button`
   justify-content: center;
   
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.scarletV1};
+
   }
 `;
 
