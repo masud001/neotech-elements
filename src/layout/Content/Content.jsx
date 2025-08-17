@@ -8,10 +8,16 @@ import { SidebarContext } from '../../context/SidebarContext';
 const MainContent = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   flex: 1;
-  padding: ${({ theme }) => theme.layout.content.padding.default};
+  padding-top: 0;
+  margin-top: 32px;
+  padding-right: ${({ theme }) => theme.layout.content.padding.default};
+  padding-left: ${({ theme }) => theme.layout.content.padding.default};
+  padding-bottom: ${({ theme }) => theme.layout.content.padding.default};
   transition: ${({ theme }) => theme.transitions.default};
   min-width: 0; /* Allow content to shrink below flex-basis */
   overflow-x: hidden; /* Prevent horizontal scrollbar */
+  height: 100vh; /* Full height for proper scroll context */
+  overflow-y: auto; /* Enable vertical scrolling */
   
   /* Ensure charts resize properly when sidebar toggles */
   .chart-container,
@@ -31,15 +37,9 @@ const MainContent = styled.div`
     padding-left: ${({ theme }) => theme.layout.content.padding.md};
   }
   
-  
-  
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    margin-left: 200px; /* Even smaller sidebar on small screens */
-  }
-  
-  /* Sidebar collapsed state */
+  /* Sidebar collapsed state - handled by App.css now */
   &.sidebar-collapsed {
-    margin-left: 0;
+    /* Margin adjustment handled by App.css */
   }
 `;
 
@@ -47,7 +47,7 @@ const Content = () => {
   const { isSidebarOpen } = useContext(SidebarContext);
   
   return (
-    <MainContent className={!isSidebarOpen ? 'sidebar-collapsed' : ''}>
+    <MainContent className={!isSidebarOpen ? 'sidebar-collapsed' : 'main-content'}>
       <ContentTop />
       <ContentMain />
     </MainContent>

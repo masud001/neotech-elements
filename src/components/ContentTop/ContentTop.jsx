@@ -21,7 +21,7 @@ const ContentTop = () => {
 
   return (
     <>
-      <MainContentTop>
+      <MainContentTop className="dashboard-header">
         <ContentTopLeft>
           <SidebarToggler type="button" onClick={() => toggleSidebar()}>
             <MenuIcon src={iconsImgs.menu} alt="Toggle sidebar" />
@@ -62,7 +62,7 @@ const ContentTop = () => {
 const MainContentTop = styled.div`
   position: sticky;
   top: 0;
-  z-index: ${({ theme }) => theme.zIndex.header || 100};
+  z-index: ${({ theme }) => theme.zIndex.header || 1000};
   background: ${({ theme }) => theme.colors.secondary};
   backdrop-filter: blur(10px);
   border-bottom: 1px solid ${({ theme }) => theme.colors.primaryLight};
@@ -72,6 +72,18 @@ const MainContentTop = styled.div`
   align-items: center;
   margin-bottom: ${({ theme }) => theme.spacing['6xl']};
   padding: ${({ theme }) => theme.spacing.md} 0;
+  
+  /* Ensure sticky behavior works properly */
+  position: -webkit-sticky; /* Safari support */
+  position: sticky;
+  
+  /* Additional sticky properties */
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+  
+  /* Ensure proper background */
+  background: ${({ theme }) => theme.colors.secondary};
+  background: ${({ theme }) => `linear-gradient(180deg, ${theme.colors.secondary} 0%, ${theme.colors.secondary} 95%, transparent 100%)`};
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     margin-bottom: ${({ theme }) => theme.spacing['4xl']};

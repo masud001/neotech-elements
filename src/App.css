@@ -27,6 +27,10 @@
 
 body {
   font-family: var(--font-family-bai);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  /* Ensure proper sticky positioning context */
+  position: relative;
 }
 
 ul {
@@ -72,6 +76,57 @@ button {
 .app {
   display: flex;
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Main content area adjustment for fixed sidebar */
+.app > div:last-child {
+  margin-left: 260px;
+  transition: margin-left 300ms ease-in-out;
+}
+
+/* Sidebar collapsed state */
+.app > div:last-child.sidebar-collapsed {
+  margin-left: 0;
+}
+
+/* Sticky header support */
+.dashboard-header {
+  position: -webkit-sticky !important; /* Safari support */
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  /* Ensure proper sticky behavior */
+  will-change: transform;
+  /* Add subtle shadow for visual separation */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure content scrolls properly under sticky header */
+.app > div:last-child {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive adjustments for fixed sidebar */
+@media screen and (max-width: 1200px) {
+  .app > div:last-child {
+    margin-left: 72px;
+  }
+  
+  .app > div:last-child.sidebar-collapsed {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .app > div:last-child {
+    margin-left: 0;
+  }
+  
+  .app > div:last-child.sidebar-collapsed {
+    margin-left: 0;
+  }
 }
 
 /* commons */
