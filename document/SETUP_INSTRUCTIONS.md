@@ -108,7 +108,7 @@ chemical-safety-dashboard/
 - **Compliance Tracking**: Regional compliance with progress bars
 - **Report Generation**: Comprehensive modal with all data
 - **Responsive Design**: Mobile-first approach
-- **Sidebar Navigation**: Collapsible navigation menu
+- **Sidebar Navigation**: Collapsible navigation menu with mobile auto-collapse
 
 ### 🎯 Mandatory Requirements Met
 - ✅ List of Chemicals with required fields
@@ -170,6 +170,7 @@ npm install
 - ✅ Chart type switching
 - ✅ Report generation
 - ✅ Search functionality
+- ✅ Mobile sidebar auto-collapse (tap outside to close)
 
 ## Deployment
 
@@ -202,5 +203,6 @@ This application demonstrates:
 - **Cross-browser Compatibility**: Works on all major browsers
 - **Responsive Design**: Mobile-first approach
 - **Code Quality**: Clean, maintainable, well-structured code
+- **Mobile UX**: Intuitive sidebar behavior with auto-collapse functionality
 
 The application is production-ready and meets all specified requirements for the Chemical Safety Dashboard project.

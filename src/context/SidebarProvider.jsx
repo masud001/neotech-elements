@@ -43,6 +43,47 @@ const SidebarProvider = ({ children }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [isDesktop, state.isSidebarOpen]);
 
+  // Mobile sidebar auto-collapse functionality
+  useEffect(() => {
+    // Only add mobile auto-collapse functionality
+    if (isDesktop) return;
+
+    const handleClickOutside = (event) => {
+      // Don't close if clicking on sidebar itself
+      if (event.target.closest('.sidebar')) return;
+      
+      // Don't close if clicking on sidebar toggler
+      if (event.target.closest('.sidebar-toggler')) return;
+      
+      // Close sidebar if it's open and clicking outside
+      if (state.isSidebarOpen) {
+        dispatch({ type: 'SET_SIDEBAR_STATE', payload: false });
+      }
+    };
+
+    const handleTouchOutside = (event) => {
+      // Don't close if touching on sidebar itself
+      if (event.target.closest('.sidebar')) return;
+      
+      // Don't close if touching on sidebar toggler
+      if (event.target.closest('.sidebar-toggler')) return;
+      
+      // Close sidebar if it's open and touching outside
+      if (state.isSidebarOpen) {
+        dispatch({ type: 'SET_SIDEBAR_STATE', payload: false });
+      }
+    };
+
+    // Add click and touch event listeners to document
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('touchend', handleTouchOutside);
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('touchend', handleTouchOutside);
+    };
+  }, [isDesktop, state.isSidebarOpen]);
+
   const toggleSidebar = () => {
     dispatch({ type: 'TOGGLE_SIDEBAR' });
   };

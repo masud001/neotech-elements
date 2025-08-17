@@ -60,7 +60,7 @@ A fully responsive React.js application that displays a Chemical Safety Dashboar
 - **Interactive Reports**: Comprehensive data export modal
 
 ### **User Experience**
-- **Collapsible Sidebar**: Space-efficient navigation
+- **Collapsible Sidebar**: Space-efficient navigation with mobile auto-collapse
 - **Touch-Friendly**: Optimized for mobile devices
 - **Smooth Animations**: Professional transitions and interactions
 - **Accessibility**: WCAG compliant design
@@ -78,6 +78,7 @@ A fully responsive React.js application that displays a Chemical Safety Dashboar
 - **Memoization**: Prevents unnecessary re-renders
 - **Resize Observers**: Efficient chart updates
 - **CSS Containment**: Better rendering performance
+- **Mobile Sidebar**: Auto-collapse functionality for better mobile UX
 
 ### **Cross-Browser Support**
 - **Chrome**: Full optimization and performance
@@ -95,7 +96,7 @@ A fully responsive React.js application that displays a Chemical Safety Dashboar
 
 ### **Mobile Optimizations**
 - **Touch-Friendly**: Appropriate button sizes and spacing
-- **Simplified Navigation**: Collapsible sidebar for mobile
+- **Simplified Navigation**: Collapsible sidebar for mobile with auto-collapse
 - **Optimized Charts**: Readable on small screens
 - **Performance**: Optimized for mobile devices
 
@@ -107,12 +108,14 @@ A fully responsive React.js application that displays a Chemical Safety Dashboar
 3. **Cross-Browser**: Vendor prefixes and feature detection
 4. **Performance**: Lazy loading and memoization strategies
 5. **Layout Stability**: Preventing shifts during interactions
+6. **Mobile UX**: Intuitive sidebar behavior with auto-collapse functionality
 
 ### **Innovative Solutions**
 - **Custom Resize Hook**: Efficient chart resizing without performance impact
 - **Theme System**: Consistent styling across all components
 - **Error Boundaries**: Graceful fallbacks for better user experience
 - **Performance Monitoring**: Optimized rendering and data handling
+- **Mobile Sidebar Logic**: Smart auto-collapse functionality for mobile devices
 
 ## 📊 Performance Metrics
 
@@ -127,6 +130,7 @@ A fully responsive React.js application that displays a Chemical Safety Dashboar
 - **Fast Navigation**: Optimized sidebar and chart interactions
 - **Responsive Charts**: Adapt to all screen sizes seamlessly
 - **Professional Feel**: Industry-standard dashboard experience
+- **Mobile Intuition**: Sidebar automatically closes when clicking outside on mobile
 
 ## 🎨 Design & User Experience
 
@@ -241,10 +245,10 @@ npm run build:netlify
 
 ## 📞 Contact Information
 
-**Developer:** [Your Name]  
-**Email:** [Your Email]  
-**Project Repository:** [Repository URL if applicable]  
-**Live Demo:** [Demo URL if available]  
+**Developer:** [Masudur Rahman]  
+**Email:** [madhnagar@gmail.com]  
+**Project Repository:** [https://github.com/masud001/neotech-elements.git]  
+**Live Demo:** [https://neotech-elements-live.netlify.app/]  
 
 ## 📋 Submission Checklist
 

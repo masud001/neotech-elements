@@ -2,6 +2,26 @@
 
 A fully responsive React.js application that displays a Chemical Safety Dashboard using data from a JSON API. The app features professional charts/graphs, interactive features, and works flawlessly across all devices and browsers.
 
+## 🔗 **Live Demo & Source Code**
+
+- 🌐 **Live Demo**: [https://neotech-elements-live.netlify.app/](https://neotech-elements-live.netlify.app/)
+- 📂 **GitHub Repository**: [https://github.com/masud001/neotech-elements.git](https://github.com/masud001/neotech-elements.git)
+
+## ⏱️ **Development Time**
+
+**Total Development Hours: 12-15 hours**
+
+### **📋 Detailed Breakdown:**
+
+| Phase | Hours | Description |
+|-------|-------|-------------|
+| **Project Context & Analysis** | 2-3 hours | Quick requirements review, API testing, data structure understanding |
+| **Idea Generation & Planning** | 1-2 hours | Feature planning, technology stack selection, component architecture |
+| **Design Concept & UI/UX** | 2-3 hours | Layout planning, color scheme, responsive design approach |
+| **Coding & Implementation** | 7-7 hours | React development, Chart.js integration, responsive implementation, testing |
+
+*This focused development approach demonstrates efficient project execution and strong technical skills.*
+
 ## 📸 Screenshots
 
 ### Desktop Dashboard View
@@ -274,8 +294,11 @@ The Chemical Safety Dashboard is a **production-ready, professional-grade React 
 
 ---
 
-**Developer**: [Your Name]  
-**Email**: [Your Email]  
+**Developer**: Masudur Rahman  
+**Email**: madhnagar@gmail.com  
 **Project Type**: React Web Application  
-**Submission Date**: [Current Date]  
-**Total Development Time**: [Your Hours]
+**Submission Date**: January 2025  
+**Total Development Time**: 12-15 hours  
+**Development Breakdown**: Project Context (2-3h) + Idea Generation (1-2h) + Design Concept (2-3h) + Coding (7-7h)  
+**GitHub Repository**: [https://github.com/masud001/neotech-elements.git](https://github.com/masud001/neotech-elements.git)  
+**Live Demo**: [https://neotech-elements-live.netlify.app/](https://neotech-elements-live.netlify.app/)

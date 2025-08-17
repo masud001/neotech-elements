@@ -41,7 +41,63 @@ const useSidebarResize = (options = {}) => {
 
 ---
 
-### 2. Responsive Design Across All Devices
+### 2. Mobile Sidebar Auto-Collapse Functionality
+
+#### **Challenge:**
+- Mobile users needed intuitive way to dismiss sidebar after opening it
+- Clicking outside sidebar should automatically close it on mobile devices
+- Desktop users should not experience any changes to existing behavior
+- Sidebar toggle button should remain functional without triggering auto-close
+
+#### **Solution Implemented:**
+```javascript
+// Mobile sidebar auto-collapse functionality
+useEffect(() => {
+  // Only add mobile auto-collapse functionality
+  if (isDesktop) return;
+
+  const handleClickOutside = (event) => {
+    // Don't close if clicking on sidebar itself
+    if (event.target.closest('.sidebar')) return;
+    
+    // Don't close if clicking on sidebar toggler
+    if (event.target.closest('.sidebar-toggler')) return;
+    
+    // Close sidebar if it's open and clicking outside
+    if (state.isSidebarOpen) {
+      dispatch({ type: 'SET_SIDEBAR_STATE', payload: false });
+    }
+  };
+
+  const handleTouchOutside = (event) => {
+    // Don't close if touching on sidebar itself
+    if (event.target.closest('.sidebar')) return;
+    
+    // Don't close if touching on sidebar toggler
+    if (event.target.closest('.sidebar-toggler')) return;
+    
+    // Close sidebar if it's open and touching outside
+    if (state.isSidebarOpen) {
+      dispatch({ type: 'SET_SIDEBAR_STATE', payload: false });
+    }
+  };
+
+  // Add click and touch event listeners to document
+  document.addEventListener('click', handleClickOutside);
+  document.addEventListener('touchend', handleTouchOutside);
+  
+  return () => {
+    document.removeEventListener('click', handleClickOutside);
+    document.removeEventListener('touchend', handleTouchOutside);
+  };
+}, [isDesktop, state.isSidebarOpen]);
+```
+
+**Result:** Mobile users can now easily dismiss the sidebar by tapping anywhere outside, while desktop users experience no changes. Sidebar toggle button remains fully functional.
+
+---
+
+### 3. Responsive Design Across All Devices
 
 #### **Challenge:**
 - Complex dashboard layout needed to work on mobile (375px) to desktop (1920px+)
@@ -82,7 +138,7 @@ const chartOptions = {
 
 ---
 
-### 3. API Data Integration & Fallback
+### 4. API Data Integration & Fallback
 
 #### **Challenge:**
 - API endpoint might be unavailable during testing
@@ -132,7 +188,7 @@ export const useChemicalData = () => {
 
 ---
 
-### 4. Cross-Browser Compatibility
+### 5. Cross-Browser Compatibility
 
 #### **Challenge:**
 - Safari had issues with sticky positioning
@@ -168,7 +224,7 @@ export const useChemicalData = () => {
 
 ---
 
-### 5. Performance Optimization
+### 6. Performance Optimization
 
 #### **Challenge:**
 - Multiple charts rendering simultaneously caused performance issues
@@ -206,7 +262,7 @@ const handleResize = useCallback(() => {
 
 ---
 
-### 6. Layout Shift Prevention
+### 7. Layout Shift Prevention
 
 #### **Challenge:**
 - Charts changing types caused layout shifts
@@ -248,7 +304,7 @@ const chartOptions = {
 
 ---
 
-### 7. Accessibility & UX
+### 8. Accessibility & UX
 
 #### **Challenge:**
 - Charts needed to be accessible to screen readers
@@ -289,6 +345,12 @@ const colors = {
 3. **Resize Observers**: Efficient chart resizing
 4. **CSS Containment**: Better rendering performance
 
+### **Mobile User Experience:**
+1. **Auto-Collapse Sidebar**: Automatically closes when clicking outside on mobile
+2. **Touch Event Support**: Handles both click and touch interactions
+3. **Smart Detection**: Won't interfere with sidebar interactions
+4. **Device-Specific Behavior**: Only activates on mobile devices (< 768px)
+
 ### **Responsive Design:**
 1. **Mobile-First Approach**: Base styles for mobile, enhancements for larger screens
 2. **Flexible Grid System**: Adapts to all screen sizes
@@ -320,6 +382,7 @@ const colors = {
 - **Smooth Interactions**: No layout shifts or jarring changes
 - **Professional Appearance**: Industry-standard dashboard design
 - **Accessibility**: WCAG compliant color scheme and navigation
+- **Mobile Optimization**: Intuitive sidebar behavior with auto-collapse functionality
 
 ### **Code Quality Improvements:**
 - **Maintainability**: Clean, modular architecture
