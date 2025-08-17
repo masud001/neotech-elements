@@ -47,7 +47,7 @@ const StyledSearchInput = styled.input.withConfig({
   transition: ${({ theme }) => theme.transitions.default};
   
   &::placeholder {
-    color: ${({ theme }) => theme.colors.silver};
+    color: ${({ theme }) => theme.colors.silverV1};
   }
   
   &:focus {

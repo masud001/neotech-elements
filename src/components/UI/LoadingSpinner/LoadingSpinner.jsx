@@ -61,7 +61,7 @@ const Spinner = styled.div`
     switch (color) {
       case 'primary': return theme.colors.primaryLight;
       case 'white': return 'rgba(255, 255, 255, 0.3)';
-      case 'silver': return theme.colors.silver;
+      case 'silver': return theme.colors.silverV1;
       default: return theme.colors.primaryLight;
     }
   }};
@@ -84,9 +84,9 @@ const Spinner = styled.div`
 const LoadingText = styled.div`
   color: ${({ theme, size }) => {
     switch (size) {
-      case 'small': return theme.colors.silver;
+      case 'small': return theme.colors.silverV1;
       case 'large': return theme.colors.white;
-      default: return theme.colors.silver;
+      default: return theme.colors.silverV1;
     }
   }};
   font-size: ${({ theme, size }) => {

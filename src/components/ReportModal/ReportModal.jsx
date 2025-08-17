@@ -294,7 +294,7 @@ const ModalTitle = styled.h2`
 const CloseButton = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   cursor: pointer;
   padding: ${({ theme }) => theme.spacing.sm};
   border-radius: ${({ theme }) => theme.borderRadius.md};
@@ -388,7 +388,7 @@ const SummaryCard = styled.div`
 `;
 
 const SummaryLabel = styled.div`
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   text-transform: uppercase;
@@ -620,7 +620,7 @@ const StandardTag = styled.span`
 `;
 
 const ComplianceDate = styled.div`
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-style: italic;
 `;

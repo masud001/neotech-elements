@@ -411,7 +411,7 @@ const ToggleContainer = styled.div`
 `;
 
 const ToggleLabel = styled.span`
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   white-space: nowrap;
@@ -477,7 +477,7 @@ const ErrorContainer = styled.div`
 const NoDataContainer = styled.div`
   text-align: center;
   padding: ${({ theme }) => theme.spacing['4xl']};
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xl}) {
@@ -590,7 +590,7 @@ const StatItem = styled.div`
 `;
 
 const StatLabel = styled.span`
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
@@ -699,7 +699,7 @@ const ProgressBar = styled.div`
 
 const ProgressPercentage = styled.div`
   text-align: center;
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   opacity: 0;

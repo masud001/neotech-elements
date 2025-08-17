@@ -128,7 +128,7 @@ const LoadingContainer = styled.div`
   align-items: center;
   min-height: 400px;
   padding: ${({ theme }) => theme.spacing['6xl']};
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   text-align: center;
   background: ${({ theme }) => theme.colors.primary};

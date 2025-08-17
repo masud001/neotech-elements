@@ -251,7 +251,7 @@ const StockQuantity = styled.span`
 `;
 
 const StockUnit = styled.span`
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   text-transform: lowercase;
   
@@ -402,7 +402,7 @@ const HazardBadge = styled.span`
 const NoDataContainer = styled.div`
   text-align: center;
   padding: ${({ theme }) => theme.spacing['6xl']};
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
 `;
 
