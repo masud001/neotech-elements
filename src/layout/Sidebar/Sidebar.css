@@ -78,12 +78,15 @@
   letter-spacing: 0.03em;
   border: 1px solid transparent;
   transition: var(--transition-default);
+  color: var(--clr-silver); /* Improved contrast for navigation text */
 }
 .nav-link:hover {
   border: 1px solid var(--clr-primar-light);
+  color: var(--clr-white); /* Better contrast on hover */
 }
 .nav-link.active {
   background-color: var(--clr-pumpkin);
+  color: var(--clr-white); /* Ensure white text on pumpkin background */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
@@ -92,6 +95,7 @@
 }
 .nav-link-text {
   text-transform: capitalize;
+  color: inherit; /* Inherit color from parent for proper contrast */
 }
 
 

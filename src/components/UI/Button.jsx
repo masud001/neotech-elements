@@ -90,7 +90,7 @@ const StyledButton = styled.button.withConfig({
       case 'secondary':
         return `
           background: ${active ? theme.colors.pumpkin : theme.colors.primaryLight};
-          color: ${active ? theme.colors.white : theme.colors.silver};
+          color: ${active ? theme.colors.white : theme.colors.silverV1};
           border: 1px solid ${active ? theme.colors.pumpkin : theme.colors.jet};
           
           &:hover:not(:disabled) {
@@ -115,7 +115,7 @@ const StyledButton = styled.button.withConfig({
       case 'success':
         return `
           background: ${active ? theme.colors.success : theme.colors.primaryLight};
-          color: ${active ? theme.colors.white : theme.colors.silver};
+          color: ${active ? theme.colors.white : theme.colors.silverV1};
           border: 1px solid ${active ? theme.colors.success : theme.colors.jet};
           
           &:hover:not(:disabled) {
@@ -128,7 +128,7 @@ const StyledButton = styled.button.withConfig({
       default: // toggle
         return `
           background: ${active ? theme.colors.pumpkin : theme.colors.primaryLight};
-          color: ${active ? theme.colors.white : theme.colors.silver};
+          color: ${active ? theme.colors.white : theme.colors.silverV1};
           border: 1px solid ${active ? theme.colors.pumpkin : theme.colors.jet};
           
           &:hover:not(:disabled) {

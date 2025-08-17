@@ -13,10 +13,10 @@
   --clr-white: #fff;
   --clr-black: #000;
   --clr-pumpkin: #fe6c00;
-  --clr-silver: #a8a5a6;
-  --clr-silver-v1: #bdbabb;
+  --clr-silver: #e8e6e7; /* Improved contrast - lighter silver */
+  --clr-silver-v1: #f0eeef; /* Improved contrast - lighter silver variant */
   --clr-scarlet: #fe1e00;
-  --clr-scarlet-v1: rgb(254, 30, 0, 0.79);
+  --clr-scarlet-v1: rgba(254, 30, 0, 0.79);
   --clr-green: #00fe93;
   --clr-yellow: #fec80a;
   --clr-jet: #302924;

@@ -50,7 +50,7 @@ const MetricHeader = styled.div`
 `;
 
 const MetricTitle = styled.h3`
-  color: ${({ theme }) => theme.colors.silver};
+  color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   margin: 0;
@@ -99,29 +99,26 @@ const MetricValue = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.sm};
 `;
 
-const MetricSubtext = styled.p`
+const MetricSubtext = styled.div`
   color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  margin: 0;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
 `;
 
-const MetricTrend = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['isPositive'].includes(prop)
-})`
+const MetricTrend = styled.div`
   display: flex;
   align-items: center;
-  margin-top: ${({ theme }) => theme.spacing.md};
-  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  gap: ${({ theme }) => theme.spacing.xs};
   color: ${({ theme, isPositive }) => 
-    isPositive ? theme.colors.green : theme.colors.scarlet
-  };
+    isPositive ? theme.colors.silverV1 : theme.colors.silverV1};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const TrendIcon = styled.span`
-  margin-right: ${({ theme }) => theme.spacing.xs};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
 
 const LoadingContainer = styled.div`
@@ -152,12 +149,14 @@ const LoadingContainer = styled.div`
 `;
 
 const ErrorContainer = styled.div`
-  background: ${({ theme }) => theme.colors.scarletV1};
-  color: ${({ theme }) => theme.colors.white};
-  padding: ${({ theme }) => theme.spacing.lg};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme }) => theme.colors.primaryLight};
+  color: ${({ theme }) => theme.colors.silverV1};
+  padding: ${({ theme }) => theme.spacing['2xl']};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   text-align: center;
-  margin-bottom: ${({ theme }) => theme.spacing['4xl']};
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  border: 1px solid ${({ theme }) => theme.colors.jet};
 `;
 
 const DashboardMetrics = () => {

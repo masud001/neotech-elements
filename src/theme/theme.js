@@ -10,8 +10,8 @@ export const cssVariables = {
   '--clr-white': '#fff',
   '--clr-black': '#000',
   '--clr-pumpkin': '#fe6c00',
-  '--clr-silver': '#a8a5a6',
-  '--clr-silver-v1': '#bdbabb',
+  '--clr-silver': '#e8e6e7', // Improved contrast - lighter silver
+  '--clr-silver-v1': '#f0eeef', // Improved contrast - lighter silver variant
   '--clr-scarlet': '#fe1e00',
   '--clr-scarlet-v1': 'rgba(254, 30, 0, 0.79)',
   '--clr-green': '#00fe93',
@@ -50,11 +50,13 @@ export const theme = {
     border: '#dee2e6',
     borderLight: '#e9ecef',
     
-    // Text Colors
+    // Text Colors - Improved contrast for accessibility
     textPrimary: '#212529',
     textSecondary: '#6c757d',
-    silver: '#a8a5a6',
-    silverV1: '#bdbabb',
+    silver: '#e8e6e7', // Improved contrast - lighter silver
+    silverV1: '#f0eeef', // Improved contrast - lighter silver variant
+    silverDark: '#c7c4c6', // Darker silver for better contrast on light backgrounds
+    silverDarker: '#8a8587', // Even darker silver for maximum contrast
     
     // Accent Colors (from CSS variables)
     pumpkin: '#fe6c00',
@@ -71,14 +73,14 @@ export const theme = {
       accent: '#fea767'
     },
     cardText: {
-      primary: '#c7c4c6',
-      secondary: '#8a8587'
+      primary: '#e8e6e7', // Improved contrast
+      secondary: '#c7c4c6' // Improved contrast
     },
     subscriptionIcon: 'rgba(254, 30, 0, 0.15)',
     
     // Cards component specific colors
-    cardBalance: '#c7c4c6',
-    cardPinText: '#8a8587'
+    cardBalance: '#e8e6e7', // Improved contrast
+    cardPinText: '#c7c4c6' // Improved contrast
   },
 
   // Typography
