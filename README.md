@@ -2,6 +2,11 @@
 
 A fully responsive React.js application that displays a Chemical Safety Dashboard using data from a JSON API. The app features professional charts/graphs, interactive features, and works flawlessly across all devices and browsers.
 
+## 🔗 **Live Demo & Source Code**
+
+- 🌐 **Live Demo**: [https://neotech-elements-live.netlify.app/](https://neotech-elements-live.netlify.app/)
+- 📂 **GitHub Repository**: [https://github.com/masud001/neotech-elements.git](https://github.com/masud001/neotech-elements.git)
+
 ## 📸 Screenshots
 
 ### Desktop Dashboard View
