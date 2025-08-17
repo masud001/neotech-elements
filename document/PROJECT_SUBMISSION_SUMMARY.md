@@ -245,10 +245,10 @@ npm run build:netlify
 
 ## 📞 Contact Information
 
-**Developer:** [Your Name]  
-**Email:** [Your Email]  
-**Project Repository:** [Repository URL if applicable]  
-**Live Demo:** [Demo URL if available]  
+**Developer:** [Masudur Rahman]  
+**Email:** [madhnagar@gmail.com]  
+**Project Repository:** [https://github.com/masud001/neotech-elements.git]  
+**Live Demo:** [https://neotech-elements-live.netlify.app/]  
 
 ## 📋 Submission Checklist
 
