@@ -22,7 +22,6 @@ const MainContent = styled.div`
   /* overflow-y: auto; */ /* Removed - conflicts with body scroll */
   
   /* Performance optimizations */
-  contain: layout style paint;
   will-change: auto;
   
   /* Prevent layout shift */
@@ -51,8 +50,6 @@ const MainContent = styled.div`
   
   /* Mobile performance optimizations */
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    /* Reduce layout shift on mobile */
-    contain: layout style paint;
     /* Prevent layout shift */
     min-height: 100vh;
   }

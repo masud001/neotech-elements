@@ -40,27 +40,36 @@ const ChartContainer = styled.div`
   max-width: 100%;
   box-sizing: border-box;
   min-width: 0;
+  /* Prevent layout shift */
+  contain: layout style paint;
+  /* Ensure consistent dimensions */
+  min-height: 400px;
+  height: auto;
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     border-radius: ${({ theme }) => theme.borderRadius.lg};
     padding: ${({ theme }) => theme.spacing['2xl']};
     margin-bottom: ${({ theme }) => theme.spacing['2xl']};
+    min-height: 450px;
   }
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     border-radius: ${({ theme }) => theme.borderRadius.xl};
     padding: ${({ theme }) => theme.spacing['3xl']};
     margin-bottom: ${({ theme }) => theme.spacing['3xl']};
+    min-height: 500px;
   }
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     padding: ${({ theme }) => theme.spacing['4xl']};
     margin-bottom: ${({ theme }) => theme.spacing['4xl']};
+    min-height: 550px;
   }
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
     padding: ${({ theme }) => theme.spacing['5xl']};
     margin-bottom: ${({ theme }) => theme.spacing['5xl']};
+    min-height: 600px;
   }
 `;
 
@@ -182,6 +191,11 @@ const ChartWrapper = styled.div`
   min-height: 250px;
   box-sizing: border-box;
   margin-bottom: ${({ theme }) => theme.spacing.md};
+  /* Prevent layout shift */
+  contain: layout style paint;
+  /* Ensure consistent dimensions */
+  /* Smooth transitions to prevent layout shift */
+  transition: opacity 0.3s ease-in-out;
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     margin-bottom: ${({ theme }) => theme.spacing.lg};
@@ -202,18 +216,28 @@ const ChartWrapper = styled.div`
     margin-bottom: ${({ theme }) => theme.spacing['4xl']};
   }
   
-  /* Ensure Chart.js canvas is responsive */
+  /* Prevent layout shift for Chart.js canvas */
   canvas {
     width: 100% !important;
     height: 100% !important;
     max-width: 100% !important;
     max-height: 100% !important;
+    /* Prevent layout shift */
+    contain: layout style paint;
+    /* Optimize rendering */
+    will-change: auto;
+    /* Smooth transitions */
+    transition: opacity 0.3s ease-in-out;
   }
   
   /* Responsive chart container */
   .chartjs-render-monitor {
     width: 100% !important;
     height: 100% !important;
+    /* Prevent layout shift */
+    contain: layout style paint;
+    /* Smooth transitions */
+    transition: opacity 0.3s ease-in-out;
   }
 `;
 
@@ -316,11 +340,13 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
         <ChartHeader>
           <ChartTitle>Monthly Chemical Usage & Incidents</ChartTitle>
         </ChartHeader>
-        <LoadingSpinner 
-          size="large" 
-          color="primary" 
-          text="Loading chart data..." 
-        />
+        <ChartWrapper ref={chartRef} className="chart-loading">
+          <LoadingSpinner 
+            size="large" 
+            color="primary" 
+            text="Loading chart data..." 
+          />
+        </ChartWrapper>
       </ChartContainer>
     );
   }
@@ -331,29 +357,38 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
         <ChartHeader>
           <ChartTitle>Monthly Chemical Usage & Incidents</ChartTitle>
         </ChartHeader>
-        <ErrorContainer>
-          Error loading chart data: {error}
-        </ErrorContainer>
+        <ChartWrapper ref={chartRef} className="chart-error">
+          <ErrorContainer>
+            Error loading chart data: {error}
+          </ErrorContainer>
+        </ChartWrapper>
       </ChartContainer>
     );
   }
 
   if (!data || !data.reports || !data.reports.monthlyUsage) {
     return (
-      <NoDataContainer>
-        <div>No monthly usage data available</div>
-        <div style={{ fontSize: '12px', marginTop: '8px', opacity: 0.7 }}>
-          {!data ? 'No data received' : 
-           !data.reports ? 'No reports data' : 
-           !data.reports.monthlyUsage ? 'No monthly usage data' : 'Unknown error'}
-        </div>
-        {data && (
-          <div style={{ fontSize: '10px', marginTop: '4px', opacity: 0.5 }}>
-            Available data keys: {Object.keys(data).join(', ')}
-            {data.reports && ` | Reports keys: ${Object.keys(data.reports).join(', ')}`}
-          </div>
-        )}
-      </NoDataContainer>
+      <ChartContainer>
+        <ChartHeader>
+          <ChartTitle>Monthly Chemical Usage & Incidents</ChartTitle>
+        </ChartHeader>
+        <ChartWrapper ref={chartRef} className="chart-error">
+          <NoDataContainer>
+            <div>No monthly usage data available</div>
+            <div style={{ fontSize: '12px', marginTop: '8px', opacity: 0.7 }}>
+              {!data ? 'No data received' : 
+               !data.reports ? 'No reports data' : 
+               !data.reports.monthlyUsage ? 'No monthly usage data' : 'Unknown error'}
+            </div>
+            {data && (
+              <div style={{ fontSize: '10px', marginTop: '4px', opacity: 0.5 }}>
+                Available data keys: {Object.keys(data).join(', ')}
+                {data.reports && ` | Reports keys: ${Object.keys(data.reports).join(', ')}`}
+              </div>
+            )}
+          </NoDataContainer>
+        </ChartWrapper>
+      </ChartContainer>
     );
   }
 
@@ -404,6 +439,30 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    /* Prevent layout shift during chart rendering */
+    animation: {
+      duration: 300,
+      easing: 'easeOutQuart'
+    },
+    /* Prevent layout shift during chart updates */
+    transitions: {
+      active: {
+        animation: {
+          duration: 300
+        }
+      }
+    },
+    /* Optimize chart rendering */
+    elements: {
+      point: {
+        radius: isMobile ? 2 : 5,
+        hoverRadius: isMobile ? 4 : 7
+      },
+      line: {
+        borderWidth: isMobile ? 1.5 : 3
+      }
+    },
+    /* Prevent layout shift during legend changes */
     plugins: {
       legend: {
         position: 'top',
@@ -503,15 +562,6 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
     interaction: {
       mode: 'index',
       intersect: false,
-    },
-    elements: {
-      point: {
-        radius: isMobile ? 2 : 5,
-        hoverRadius: isMobile ? 4 : 7
-      },
-      line: {
-        borderWidth: isMobile ? 1.5 : 3
-      }
     }
   };
 
@@ -543,11 +593,17 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
           </Button>
         </ToggleContainer>
       </ChartHeader>
-      <ChartWrapper ref={chartRef}>
+      <ChartWrapper ref={chartRef} className="responsive-element">
         {chartType === 'line' ? (
-          <Line data={chartData} options={options} />
+          <Line 
+            data={chartData} 
+            options={options}
+          />
         ) : (
-          <Bar data={chartData} options={options} />
+          <Bar 
+            data={chartData} 
+            options={options}
+          />
         )}
       </ChartWrapper>
     </ChartContainer>

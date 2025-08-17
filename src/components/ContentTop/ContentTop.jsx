@@ -281,8 +281,8 @@ const NotificationDot = styled.span`
   position: absolute;
   top: ${({ theme }) => theme.spacing.xs};
   right: ${({ theme }) => theme.spacing.xs};
-  width: ${({ theme }) => theme.spacing.sm};
-  height: ${({ theme }) => theme.spacing.sm};
+  width: ${({ theme }) => theme.spacing.xl};
+  height: ${({ theme }) => theme.spacing.xl};
   background: ${({ theme }) => theme.colors.scarlet};
   border-radius: ${({ theme }) => theme.borderRadius.full};
   border: 2px solid ${({ theme }) => theme.colors.primary};

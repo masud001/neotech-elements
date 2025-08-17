@@ -14,6 +14,41 @@ export const GlobalStyles = createGlobalStyle`
     scrollbar-gutter: stable;
     /* Ensure proper height */
     height: 100%;
+    /* Prevent font-based layout shift */
+    font-display: swap;
+  }
+
+  /* Font loading optimizations */
+  @font-face {
+    font-family: 'Bai Jamjuree';
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  /* Prevent layout shift for all elements */
+  * {
+    /* Optimize rendering */
+    will-change: auto;
+  }
+
+  /* Apply containment only to specific elements that need it */
+  .chart-container, .chart-wrapper, .chart-loading, .chart-error,
+  .dynamic-content, .sidebar-transition, .responsive-element {
+    /* Prevent layout shift */
+    contain: layout style paint;
+    /* Optimize rendering */
+    will-change: auto;
+  }
+
+  /* Specific optimizations for text elements */
+  h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, label {
+    /* Prevent font-based layout shift */
+    font-display: swap;
+    /* Ensure consistent text rendering */
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
   }
 
   body {
@@ -109,8 +144,6 @@ export const GlobalStyles = createGlobalStyle`
   .app {
     display: flex;
     min-height: 100vh;
-    /* Prevent layout shift */
-    contain: layout style paint;
     /* Optimize for performance */
     will-change: auto;
     /* Remove conflicting scroll properties - let body handle scrolling */
@@ -131,8 +164,6 @@ export const GlobalStyles = createGlobalStyle`
     box-shadow: ${({ theme }) => theme.shadows.sm};
     color: ${({ theme }) => theme.colors.white};
     padding: ${({ theme }) => theme.spacing['4xl']};
-    /* Prevent layout shift */
-    contain: layout style paint;
     /* Optimize rendering */
     will-change: auto;
   }
@@ -211,6 +242,11 @@ export const GlobalStyles = createGlobalStyle`
     transition: opacity 0.3s ease-in-out;
     /* Prevent layout shift */
     contain: layout style paint;
+    /* Ensure consistent dimensions */
+    width: 100% !important;
+    height: 100% !important;
+    /* Optimize rendering */
+    will-change: auto;
   }
   
   /* Performance-optimized chart containers */
@@ -221,6 +257,9 @@ export const GlobalStyles = createGlobalStyle`
     contain: layout style paint;
     /* Optimize rendering */
     will-change: auto;
+    /* Ensure consistent dimensions */
+    min-height: 300px;
+    height: auto;
   }
   
   /* Performance-optimized canvas elements */
@@ -231,6 +270,11 @@ export const GlobalStyles = createGlobalStyle`
     contain: layout style paint;
     /* Optimize rendering */
     will-change: auto;
+    /* Ensure consistent dimensions */
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
   }
   
   /* Performance-optimized main content charts */
@@ -241,6 +285,9 @@ export const GlobalStyles = createGlobalStyle`
     contain: layout style paint;
     /* Optimize rendering */
     will-change: auto;
+    /* Ensure consistent dimensions */
+    width: 100% !important;
+    height: 100% !important;
   }
   
   /* Performance-optimized chart containers during sidebar toggle */
@@ -251,15 +298,39 @@ export const GlobalStyles = createGlobalStyle`
     contain: layout style paint;
     /* Optimize rendering */
     will-change: auto;
+    /* Ensure consistent dimensions */
+    min-height: 300px;
+    height: auto;
+  }
+
+  /* Chart loading states to prevent layout shift */
+  .chart-loading {
+    /* Prevent layout shift during loading */
+    contain: layout style paint;
+    /* Ensure consistent dimensions */
+    min-height: 300px;
+    height: auto;
+    /* Show loading state */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Chart error states to prevent layout shift */
+  .chart-error {
+    /* Prevent layout shift during error */
+    contain: layout style paint;
+    /* Ensure consistent dimensions */
+    min-height: 300px;
+    height: auto;
+    /* Show error state */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Performance optimizations for mobile */
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    /* Reduce layout shift on mobile */
-    .app {
-      contain: layout style paint;
-    }
-    
     /* Optimize images for mobile */
     img {
       content-visibility: auto;
@@ -275,15 +346,75 @@ export const GlobalStyles = createGlobalStyle`
 
   /* Critical CSS optimizations */
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    /* Prevent layout shift on small screens */
-    * {
-      contain: layout style paint;
-    }
-    
     /* Optimize font loading */
     body {
       font-display: swap;
     }
+    
+    /* Ensure chart containers maintain dimensions */
+    .chart-container, .chart-wrapper {
+      min-height: 250px !important;
+      height: auto !important;
+    }
+  }
+
+  /* Prevent layout shift during font loading */
+  .fonts-loading {
+    /* Use fallback font to prevent layout shift */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  .fonts-loaded {
+    /* Apply custom font when loaded */
+    font-family: 'Bai Jamjuree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Prevent layout shift for dynamic content */
+  .dynamic-content {
+    /* Prevent layout shift during content changes */
+    contain: layout style paint;
+    /* Ensure consistent dimensions */
+    min-height: 100px;
+    height: auto;
+    /* Optimize transitions */
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  /* Optimize sidebar transitions to prevent chart layout shift */
+  .sidebar-transition {
+    /* Prevent layout shift during sidebar transitions */
+    contain: layout style paint;
+    /* Optimize transitions */
+    transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+    /* Ensure consistent dimensions */
+    will-change: width, transform;
+  }
+
+  /* Prevent layout shift for responsive elements */
+  .responsive-element {
+    /* Prevent layout shift during responsive changes */
+    contain: layout style paint;
+    /* Ensure consistent dimensions */
+    min-width: 0;
+    min-height: 0;
+    /* Optimize rendering */
+    will-change: auto;
+  }
+
+  /* Debug styles to ensure scrolling works */
+  .debug-scroll {
+    /* Ensure content can scroll */
+    min-height: 200vh;
+    background: linear-gradient(to bottom, #1e1611 0%, #29221d 100%);
+  }
+
+  /* Ensure root element allows scrolling */
+  #root {
+    /* Allow scrolling */
+    min-height: 100vh;
+    /* Ensure proper layout */
+    display: flex;
+    flex-direction: column;
   }
 
   /* Print styles */
