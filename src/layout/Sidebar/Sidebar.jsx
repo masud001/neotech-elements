@@ -18,11 +18,27 @@ const Sidebar = () => {
     }
   }, [isSidebarOpen]);
 
+  // Function to get descriptive alt text for each navigation icon
+  const getIconAltText = (title, id) => {
+    const altTexts = {
+      1: 'House icon for home page',
+      2: 'Checkmark icon for chemical management',
+      3: 'Document icon for reports section',
+      4: 'Wallet icon for SDS documents',
+      5: 'Paper plane icon for incident reports',
+      6: 'Analytics chart icon for data analysis',
+      7: 'Growth chart icon for training materials',
+      8: 'User profile icon for user management',
+      9: 'Gear icon for system settings'
+    };
+    return altTexts[id] || `${title} section icon`;
+  };
+
   return (
     <div className={ `sidebar ${sidebarClass}` }>
       <div className="user-info">
           <div className="info-img img-fit-cover">
-              <img src={ personsImgs.person_two } alt="profile image" />
+              <img src={ personsImgs.person_two } alt="User profile photo" />
           </div>
           <span className="info-name">alice-doe</span>
       </div>
@@ -33,7 +49,12 @@ const Sidebar = () => {
               navigationLinks.map((navigationLink) => (
                 <li className="nav-item" key = { navigationLink.id }>
                   <a href="#" className={ `nav-link ${ navigationLink.id === activeLinkIdx ? 'active' : null }` }>
-                      <img src={ navigationLink.image } className="nav-link-icon" alt = { navigationLink.title } />
+                      <img 
+                        src={ navigationLink.image } 
+                        className="nav-link-icon" 
+                        alt={ getIconAltText(navigationLink.title, navigationLink.id) }
+                        aria-hidden="false"
+                      />
                       <span className="nav-link-text">{ navigationLink.title }</span>
                   </a>
                 </li>
