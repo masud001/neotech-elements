@@ -1,6 +1,6 @@
 [build]
-  # Build command
-  command = "npm run build"
+  # Build command - explicit dependency installation and build
+  command = "npm ci --legacy-peer-deps && npm run build"
   
   # Publish directory (where Vite builds to)
   publish = "dist"
@@ -14,6 +14,12 @@
   
   # Build environment
   NODE_ENV = "production"
+  
+  # Ensure npm uses the correct registry and installs all dependencies
+  NPM_FLAGS = "--legacy-peer-deps"
+  
+  # Force npm to install dependencies
+  NPM_CONFIG_PRODUCTION = "false"
 
 # Redirects for SPA (Single Page Application)
 [[redirects]]
