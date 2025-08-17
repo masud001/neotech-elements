@@ -14,10 +14,18 @@ const useSidebarResize = (options = {}) => {
   const { isSidebarOpen } = useSidebar();
   const resizeTimeoutRef = useRef(null);
   const chartRef = useRef(null);
+  const lastResizeTime = useRef(0);
 
   // Function to trigger chart resize
   const triggerResize = useCallback(() => {
     if (!enabled) return;
+
+    // Prevent rapid successive resizes
+    const now = Date.now();
+    if (now - lastResizeTime.current < 100) {
+      return;
+    }
+    lastResizeTime.current = now;
 
     // Clear any existing timeout
     if (resizeTimeoutRef.current) {
@@ -46,7 +54,12 @@ const useSidebarResize = (options = {}) => {
   // Listen for sidebar state changes
   useEffect(() => {
     if (enabled) {
-      triggerResize();
+      // Add a small delay to ensure DOM has settled
+      const sidebarResizeTimeout = setTimeout(() => {
+        triggerResize();
+      }, 50);
+      
+      return () => clearTimeout(sidebarResizeTimeout);
     }
   }, [isSidebarOpen, triggerResize, enabled]);
 
@@ -54,7 +67,10 @@ const useSidebarResize = (options = {}) => {
   useEffect(() => {
     const handleSidebarToggle = () => {
       if (enabled) {
-        triggerResize();
+        // Add a small delay to ensure DOM has settled
+        setTimeout(() => {
+          triggerResize();
+        }, 50);
       }
     };
 
@@ -72,7 +88,14 @@ const useSidebarResize = (options = {}) => {
   useEffect(() => {
     const handleWindowResize = () => {
       if (enabled) {
-        triggerResize();
+        // Debounce window resize events
+        if (resizeTimeoutRef.current) {
+          clearTimeout(resizeTimeoutRef.current);
+        }
+        
+        resizeTimeoutRef.current = setTimeout(() => {
+          triggerResize();
+        }, 100);
       }
     };
 

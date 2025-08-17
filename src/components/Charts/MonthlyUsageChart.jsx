@@ -188,7 +188,7 @@ const ChartWrapper = styled.div`
   height: 300px;
   width: 100%;
   max-width: 100%;
-  min-height: 250px;
+  min-height: 300px;
   box-sizing: border-box;
   margin-bottom: ${({ theme }) => theme.spacing.md};
   /* Prevent layout shift */
@@ -197,22 +197,35 @@ const ChartWrapper = styled.div`
   /* Smooth transitions to prevent layout shift */
   transition: opacity 0.3s ease-in-out;
   
+  /* Prevent layout shift during chart type changes */
+  &.chart-loading,
+  &.chart-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: ${({ theme }) => theme.colors.primaryLight};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+  }
+  
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     height: 350px;
+    min-height: 350px;
     margin-bottom: ${({ theme }) => theme.spacing['2xl']};
   }
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     height: 400px;
+    min-height: 400px;
     margin-bottom: ${({ theme }) => theme.spacing['3xl']};
   }
   
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
     height: 450px;
+    min-height: 450px;
     margin-bottom: ${({ theme }) => theme.spacing['4xl']};
   }
   
@@ -241,6 +254,36 @@ const ChartWrapper = styled.div`
   }
 `;
 
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  background: ${({ theme }) => theme.colors.primaryLight};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  color: ${({ theme }) => theme.colors.silverV1};
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  
+  /* Prevent layout shift - match chart wrapper height */
+  min-height: 300px;
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    height: 350px;
+    min-height: 350px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    height: 400px;
+    min-height: 400px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    height: 450px;
+    min-height: 450px;
+  }
+`;
+
 const ErrorContainer = styled.div`
   background: ${({ theme }) => theme.colors.scarletV1};
   color: ${({ theme }) => theme.colors.white};
@@ -248,6 +291,13 @@ const ErrorContainer = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.md};
   text-align: center;
   margin: ${({ theme }) => theme.spacing['2xl']} 0;
+  
+  /* Prevent layout shift - match chart wrapper height */
+  height: 300px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: ${({ theme }) => theme.spacing.md};
@@ -263,6 +313,21 @@ const ErrorContainer = styled.div`
     padding: ${({ theme }) => theme.spacing.sm};
     margin: ${({ theme }) => theme.spacing.sm} 0;
   }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    height: 350px;
+    min-height: 350px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    height: 400px;
+    min-height: 400px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    height: 450px;
+    min-height: 450px;
+  }
 `;
 
 const NoDataContainer = styled.div`
@@ -270,6 +335,14 @@ const NoDataContainer = styled.div`
   padding: ${({ theme }) => theme.spacing['4xl']};
   color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  
+  /* Prevent layout shift - match chart wrapper height */
+  height: 300px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xl}) {
     padding: ${({ theme }) => theme.spacing['3xl']};
@@ -293,6 +366,21 @@ const NoDataContainer = styled.div`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
     padding: ${({ theme }) => theme.spacing.md};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    height: 350px;
+    min-height: 350px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    height: 400px;
+    min-height: 400px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    height: 450px;
+    min-height: 450px;
   }
 `;
 
@@ -450,6 +538,12 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
         animation: {
           duration: 300
         }
+      },
+      /* Prevent layout shift during chart type changes */
+      resize: {
+        animation: {
+          duration: 0
+        }
       }
     },
     /* Optimize chart rendering */
@@ -566,7 +660,32 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
   };
 
   const handleToggle = (type) => {
-    setChartType(type);
+    // Prevent layout shift by maintaining chart dimensions
+    if (chartRef.current && chartRef.current.chartInstance) {
+      const currentChart = chartRef.current.chartInstance;
+      
+      // Store current dimensions
+      const currentWidth = currentChart.width;
+      const currentHeight = currentChart.height;
+      
+      // Update chart type
+      setChartType(type);
+      
+      // Force immediate resize to prevent layout shift
+      setTimeout(() => {
+        if (chartRef.current && chartRef.current.chartInstance) {
+          const newChart = chartRef.current.chartInstance;
+          newChart.resize();
+          
+          // Ensure consistent dimensions
+          if (newChart.width !== currentWidth || newChart.height !== currentHeight) {
+            newChart.resize();
+          }
+        }
+      }, 50);
+    } else {
+      setChartType(type);
+    }
   };
 
   return (

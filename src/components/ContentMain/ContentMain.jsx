@@ -83,44 +83,112 @@ const MainContentHolder = styled.div`
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  
+  /* Prevent layout shift */
+  contain: layout style paint;
+  will-change: auto;
+  
+  /* Ensure consistent dimensions */
+  min-height: 100vh;
 `;
 
 const DashboardSection = styled.div`
   width: 100%;
   max-width: 100%;
+  
+  /* Prevent layout shift */
+  contain: layout style paint;
+  
+  /* Ensure consistent dimensions */
+  min-height: 200px;
 `;
 
 const MonthlyUsageSection = styled.div`
   width: 100%;
   max-width: 100%;
+  
+  /* Prevent layout shift */
+  contain: layout style paint;
+  
+  /* Ensure consistent dimensions */
+  min-height: 400px;
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 500px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    min-height: 550px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    min-height: 600px;
+  }
 `;
 
 const DoubleChartSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing['4xl']};
+  gap: ${({ theme }) => theme.spacing['2xl']};
   width: 100%;
   max-width: 100%;
   
+  /* Prevent layout shift */
+  contain: layout style paint;
+  
+  /* Ensure consistent dimensions */
+  min-height: 400px;
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 500px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    min-height: 550px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    min-height: 600px;
+  }
+  
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     flex-direction: row;
-    gap: ${({ theme }) => theme.spacing['4xl']};
   }
 `;
 
 const ChartColumn = styled.div`
+  flex: 1;
   width: 100%;
   max-width: 100%;
   
+  /* Prevent layout shift */
+  contain: layout style paint;
+  
+  /* Ensure consistent dimensions */
+  min-height: 400px;
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 500px;
+  }
+  
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 50%;
-    max-width: 50%;
+    min-height: 550px;
+  }
+  
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    min-height: 600px;
   }
 `;
 
 const ChemicalsSection = styled.div`
   width: 100%;
   max-width: 100%;
+  
+  /* Prevent layout shift */
+  contain: layout style paint;
+  
+  /* Ensure consistent dimensions */
+  min-height: 300px;
 `;
 
 export default ContentMain;

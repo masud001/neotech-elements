@@ -14,7 +14,7 @@ const MetricsContainer = styled.div`
   contain: layout style paint;
   will-change: auto;
   
-  /* Prevent layout shift */
+  /* Prevent layout shift - consistent grid dimensions */
   min-height: 200px;
   
   @media screen and (min-width: 1540px) {
@@ -45,8 +45,12 @@ const MetricCard = styled.div`
   contain: layout style paint;
   will-change: auto;
   
-  /* Prevent layout shift */
-  min-height: 120px;
+  /* Prevent layout shift - consistent card dimensions */
+  min-height: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   
   &:hover {
     transform: translateY(-2px);
@@ -61,8 +65,10 @@ const MetricHeader = styled.div`
   justify-content: space-between;
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   
-  /* Prevent layout shift */
+  /* Prevent layout shift - consistent header height */
   min-height: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
 `;
 
 const MetricTitle = styled.h3`
@@ -75,6 +81,10 @@ const MetricTitle = styled.h3`
   
   /* Prevent layout shift */
   line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
 `;
 
 const MetricIcon = styled.div.withConfig({
@@ -120,9 +130,13 @@ const MetricValue = styled.div`
   font-weight: ${({ theme }) => theme.typography.fontWeight.extrabold};
   margin-bottom: ${({ theme }) => theme.spacing.sm};
   
-  /* Prevent layout shift */
+  /* Prevent layout shift - consistent value height */
   line-height: 1.2;
   min-height: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 `;
 
 const MetricSubtext = styled.div`
@@ -131,9 +145,11 @@ const MetricSubtext = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.md};
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
   
-  /* Prevent layout shift */
+  /* Prevent layout shift - consistent subtext height */
   line-height: 1.4;
   min-height: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
 `;
 
 const MetricTrendStyled = styled.div`
@@ -145,9 +161,12 @@ const MetricTrendStyled = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   
-  /* Prevent layout shift */
+  /* Prevent layout shift - consistent trend height */
   line-height: 1.4;
   min-height: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  margin-top: auto;
 `;
 
 const MetricTrend = ({ isPositive, children, ...props }) => (
@@ -174,6 +193,9 @@ const LoadingContainer = styled.div`
   color: ${({ theme }) => theme.colors.silverV1};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  
+  /* Prevent layout shift - match metrics container height */
+  min-height: 200px;
 `;
 
 const ErrorContainer = styled.div`
@@ -185,6 +207,12 @@ const ErrorContainer = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   border: 1px solid ${({ theme }) => theme.colors.jet};
+  
+  /* Prevent layout shift - match metrics container height */
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const DashboardMetrics = () => {
