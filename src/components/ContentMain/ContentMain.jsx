@@ -123,23 +123,4 @@ const ChemicalsSection = styled.div`
   max-width: 100%;
 `;
 
-const TestScrollSection = styled.div`
-  width: 100%;
-  max-width: 100%;
-  padding: ${({ theme }) => theme.spacing['4xl']};
-  background: ${({ theme }) => theme.colors.primary};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  margin-top: ${({ theme }) => theme.spacing['4xl']};
-  
-  h3 {
-    color: ${({ theme }) => theme.colors.white};
-    margin-bottom: ${({ theme }) => theme.spacing.lg};
-  }
-  
-  p {
-    color: ${({ theme }) => theme.colors.silverV1};
-    margin-bottom: ${({ theme }) => theme.spacing['2xl']};
-  }
-`;
-
 export default ContentMain;
