@@ -122,11 +122,29 @@ const TrendIcon = styled.span`
 
 const LoadingContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 400px;
   padding: ${({ theme }) => theme.spacing['6xl']};
   color: ${({ theme }) => theme.colors.silver};
   font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  text-align: center;
+  background: ${({ theme }) => theme.colors.primary};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  margin-bottom: ${({ theme }) => theme.spacing['4xl']};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+  border: 1px solid ${({ theme }) => theme.colors.primaryLight};
+  
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 300px;
+    padding: ${({ theme }) => theme.spacing['4xl']};
+  }
+  
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    min-height: 250px;
+    padding: ${({ theme }) => theme.spacing['3xl']};
+  }
 `;
 
 const ErrorContainer = styled.div`
@@ -158,13 +176,13 @@ const DashboardMetrics = () => {
 
   if (loading) {
     return (
-      <MetricsContainer>
+      <LoadingContainer>
         <LoadingSpinner 
           size="large" 
           color="primary" 
           text="Loading dashboard metrics..." 
         />
-      </MetricsContainer>
+      </LoadingContainer>
     );
   }
 

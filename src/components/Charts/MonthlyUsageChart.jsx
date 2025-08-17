@@ -316,7 +316,7 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
         </ChartHeader>
         <LoadingSpinner 
           size="large" 
-          color="white" 
+          color="primary" 
           text="Loading chart data..." 
         />
       </ChartContainer>
