@@ -1,220 +1,230 @@
-@import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+/* =========================================================
+   1. Imports
+   ========================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@200;300;400;500;600;700&display=swap");
 
+/* =========================================================
+   2. Reset & Base
+   ========================================================= */
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 html {
-  /* Ensure proper positioning context for fixed elements */
   position: relative;
   height: 100%;
   overflow-x: hidden;
-}
-
-:root {
-  --clr-primary: #29221d;
-  --clr-primar-light: #473b33;
-  --clr-secondary: #1e1611;
-  --clr-white: #fff;
-  --clr-black: #000;
-  --clr-pumpkin: #fe6c00;
-  --clr-silver: #e8e6e7; /* Improved contrast - lighter silver */
-  --clr-silver-v1: #f0eeef; /* Improved contrast - lighter silver variant */
-  --clr-scarlet: #fe1e00;
-  --clr-scarlet-v1: rgba(254, 30, 0, 0.79);
-  --clr-green: #00fe93;
-  --clr-yellow: #fec80a;
-  --clr-jet: #302924;
-  --clr-peach: #ffc397;
-  --font-family-bai: "Bai Jamjuree", sans-serif;
-  --transition-default: all 300ms ease-in-out;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-family-bai);
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  /* Ensure proper sticky positioning context */
-  position: relative;
-  /* Ensure body handles all scrolling */
-  height: 100vh;
-  overflow-y: auto;
-  /* Ensure sidebar fixed positioning works */
-  transform: translateZ(0);
-  /* Additional positioning context */
-  position: relative;
+  color: var(--clr-white);
+  background: var(--clr-secondary);
   min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transform: translateZ(0); /* Promote for smoother sticky */
 }
 
-ul {
-  list-style-type: none;
-}
+ul { list-style: none; }
 a {
-  color: unset;
+  color: inherit;
   text-decoration: none;
-  color: var(--clr-white);
 }
 button {
-  background-color: transparent;
-  border: none;
+  background: transparent;
+  border: 0;
   cursor: pointer;
+  font: inherit;
+  color: inherit;
 }
 
+/* Media images */
 .img-fit-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.text-white {
-  color: var(--clr-white);
-}
-.text-silver-v1 {
-  color: var(--clr-silver-v1);
-}
-.text-scarlet {
-  color: var(--clr-scarlet);
-}
-.text-green {
-  color: var(--clr-green);
-}
-.bg-jet {
-  background: var(--clr-jet);
+/* =========================================================
+   3. Design Tokens (CSS Variables)
+   ========================================================= */
+:root {
+  /* Colors */
+  --clr-primary: #29221d;
+  --clr-primar-light: #473b33; /* legacy (typo kept) */
+  --clr-primary-light: #473b33; /* corrected alias */
+  --clr-secondary: #1e1611;
+  --clr-white: #fff;
+  --clr-black: #000;
+  --clr-pumpkin: #fe6c00;
+  --clr-silver: #e8e6e7;
+  --clr-silver-v1: #f0eeef;
+  --clr-scarlet: #fe1e00;
+  --clr-scarlet-v1: rgba(254, 30, 0, 0.79);
+  --clr-green: #00fe93;
+  --clr-yellow: #fec80a;
+  --clr-jet: #302924;
+  --clr-peach: #ffc397;
+
+  /* Typography */
+  --font-family-bai: "Bai Jamjuree", sans-serif;
+  --font-size-sm: 14px;
+  --font-size-lg-value: 24px;
+
+  /* Layout tokens */
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 72px;
+  --layer-header: 1010;
+  --layer-sidebar: 1005;
+  --radius-base: 12px;
+
+  /* Motion */
+  --transition-default: 300ms ease-in-out;
 }
 
-.text-sm {
-  font-size: 14px;
+/* =========================================================
+   4. Utility Text & Background Helpers
+   ========================================================= */
+.text-white { color: var(--clr-white); }
+.text-silver-v1 { color: var(--clr-silver-v1); }
+.text-scarlet { color: var(--clr-scarlet); }
+.text-green { color: var(--clr-green); }
+.text-sm { font-size: var(--font-size-sm); }
+.bg-jet { background: var(--clr-jet); }
+.lg-value {
+  font-size: var(--font-size-lg-value);
+  font-weight: 600;
 }
 
+/* =========================================================
+   5. App Layout & Structural Elements
+   ========================================================= */
 .app {
   display: flex;
   min-height: 100vh;
-  /* Ensure proper positioning context for fixed sidebar */
   position: relative;
+  isolation: isolate;
 }
 
-/* Sticky sidebar positioning */
+/* Sidebar (expects element with class .sidebar inside .app)
+   Sticky so content scrolls independently */
 .app .sidebar {
-  position: -webkit-sticky; /* Safari support */
   position: sticky;
   top: 0;
   left: 0;
   height: 100vh;
-  z-index: 1005;
-  /* Ensure sidebar stays in place */
-  transform: translateZ(0);
+  z-index: var(--layer-sidebar);
+  width: var(--sidebar-width);
   will-change: transform;
+  backface-visibility: hidden;
+  contain: layout paint;
+  transition: transform var(--transition-default), width var(--transition-default);
 }
 
-/* Main content area adjustment for sticky sidebar */
+/* Collapsed modifier (add .is-collapsed to .app OR .sidebar-change to sidebar) */
+.app .sidebar.sidebar-change,
+.app.is-collapsed .sidebar {
+  transform: translateX(calc(-1 * var(--sidebar-width)));
+}
+
+/* Alternative small-collapse (legacy) */
+.app .sidebar.is-mini {
+  width: var(--sidebar-width-collapsed);
+}
+
+/* Content wrapper: assumes second child */
 .app > div:last-child {
-  transition: margin-left 300ms ease-in-out;
-  /* Ensure content flows naturally with sticky sidebar */
   position: relative;
+  flex: 1 1 auto;
   z-index: 1;
+  transition: margin-left var(--transition-default);
+  min-width: 0;
 }
 
-/* Sidebar collapsed state - content adjustment */
-.app > div:last-child.sidebar-collapsed {
-  margin-left: 72px; /* Account for collapsed sidebar width */
+/* When sidebar uses mini collapsed width */
+.app.has-mini-sidebar > div:last-child {
+  margin-left: var(--sidebar-width-collapsed);
 }
 
-/* Sidebar collapsed state styling */
-.app .sidebar.sidebar-change {
-  margin-left: -260px;
-  transform: translateX(-260px);
-}
-
-/* Responsive sidebar collapsed states */
-@media screen and (max-width: 1200px) {
-  .app .sidebar.sidebar-change {
-    margin-left: -72px;
-    transform: translateX(-72px);
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .app .sidebar.sidebar-change {
-    margin-left: -72px;
-    transform: translateX(-72px);
-  }
-}
-
-/* Sidebar collapsed state */
-.app > div:last-child.sidebar-collapsed {
+/* Legacy collapsed state (no offset) */
+.app > div:last-child.sidebar-collapsed,
+.app.is-collapsed > div:last-child {
   margin-left: 0;
 }
 
-/* Sticky header support */
+/* =========================================================
+   6. Sticky Header
+   ========================================================= */
 .dashboard-header {
-  position: -webkit-sticky !important; /* Safari support */
   position: sticky !important;
   top: 0 !important;
-  z-index: 1010 !important;
-  /* Ensure proper sticky behavior */
+  z-index: var(--layer-header) !important;
   will-change: transform;
-  /* Add subtle shadow for visual separation */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--clr-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Remove conflicting scroll properties */
-/* .app > div:last-child {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-} */
-
-/* Responsive adjustments for sticky sidebar */
-@media screen and (max-width: 1200px) {
-
-  
-  .app > div:last-child.sidebar-collapsed {
-    margin-left: 0; /* No sidebar on mobile when collapsed */
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .app > div:last-child {
-    margin-left: 0; /* No sidebar on very small screens */
-  }
-  
-  .app > div:last-child.sidebar-collapsed {
-    margin-left: 0; /* No sidebar on very small screens when collapsed */
-  }
-}
-
-/* commons */
-.lg-value {
-  font-size: 24px;
-  font-weight: 600;
-}
+/* =========================================================
+   7. Common Card / Grid Blocks
+   ========================================================= */
 .grid-common {
-  background-color: var(--clr-primary);
-  border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 8px 24px;
+  background: var(--clr-primary);
+  border-radius: var(--radius-base);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
   color: var(--clr-white);
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
+
 .grid-c-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 8px;
 }
+
 .grid-c-title-text {
   font-weight: 400;
   color: var(--clr-silver);
 }
+
 .grid-c-title-icon img {
   width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
-@media screen and (max-width: 1400px) {
-  .grid-common {
-    padding: 16px;
-  }
-  body {
-    font-size: 14px !important;
+/* =========================================================
+   8. Responsive
+   ========================================================= */
+@media (max-width: 1400px) {
+  .grid-common { padding: 16px; }
+  body { font-size: 14px; }
+}
+
+@media (max-width: 1200px) {
+  /* Collapse margin adjustments on narrower screens */
+  .app > div:last-child,
+  .app > div:last-child.sidebar-collapsed,
+  .app.is-collapsed > div:last-child {
+    margin-left: 0;
   }
 }
+
+@media (max-width: 420px) {
+  .app > div:last-child { margin-left: 0; }
+}
+
+/* =========================================================
+   9. Legacy Compatibility (OPTIONAL CLEANUP LATER)
+   Keeps old selectors functioning until components updated
+   ========================================================= */
+.app .sidebar.sidebar-change { /* already handled above */ }
+.app > div:last-child.sidebar-collapsed { /* retained */ }
