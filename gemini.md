@@ -633,6 +633,15 @@ Avoid browser-specific features that break compatibility.
   - **Challenges & solutions** description
   - Total hours spent
 
+## Submission Guidelines
+  - Provide your complete solution as a ZIP archive containing all source files. Send the ZIP file to core@neotechelements.com
+  - Include a clear Word or PDF document with:
+  - Setup instructions (how to install dependencies and run the app locally).
+  - A description of any challenges you encountered during development and how
+you resolved them.
+  - Ensure your application runs correctly on a local development server before submission.
+  - Submit your completed project within 3 to 5 days from receiving this task and include a record of the total hours you spent to complete the project
+
 ## 13. Gemini CLI Role in VS Code
 
 - Gemini should assist with:
