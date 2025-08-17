@@ -82,6 +82,10 @@ const ChartHeader = styled.div`
   gap: ${({ theme }) => theme.spacing.lg};
   width: 100%;
   
+  /* Prevent layout shift - consistent header height */
+  min-height: 4rem;
+  height: 4rem;
+  
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     margin-bottom: ${({ theme }) => theme.spacing['2xl']};
     gap: ${({ theme }) => theme.spacing.md};
@@ -93,6 +97,9 @@ const ChartHeader = styled.div`
     gap: ${({ theme }) => theme.spacing.lg};
     margin-bottom: ${({ theme }) => theme.spacing['2xl']};
     text-align: center;
+    /* Maintain consistent height even in column layout */
+    min-height: 6rem;
+    height: 6rem;
   }
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
@@ -116,6 +123,12 @@ const ChartTitle = styled.h3`
   min-width: 0;
   text-align: left;
   
+  /* Prevent layout shift - consistent title dimensions */
+  min-height: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     font-size: ${({ theme }) => theme.typography.fontSize.lg};
   }
@@ -126,6 +139,7 @@ const ChartTitle = styled.h3`
     flex: none;
     width: 100%;
     margin-bottom: ${({ theme }) => theme.spacing.md};
+    justify-content: center;
   }
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
@@ -144,6 +158,10 @@ const ToggleContainer = styled.div`
   flex-shrink: 0;
   flex-direction: row;
   justify-content: flex-end;
+  
+  /* Prevent layout shift - consistent toggle container dimensions */
+  min-height: 2.5rem;
+  height: 2.5rem;
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 100%;
@@ -172,6 +190,12 @@ const ToggleLabel = styled.span`
   font-size: ${({ theme }) => theme.typography.fontSize.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   white-space: nowrap;
+  
+  /* Prevent layout shift - consistent label dimensions */
+  min-height: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
   
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     font-size: ${({ theme }) => theme.typography.fontSize.xs};
@@ -203,6 +227,12 @@ const ChartWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    background: ${({ theme }) => theme.colors.primaryLight};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+  }
+  
+  /* Prevent layout shift when chart is not ready */
+  &.chart-not-ready {
     background: ${({ theme }) => theme.colors.primaryLight};
     border-radius: ${({ theme }) => theme.borderRadius.md};
   }
@@ -387,6 +417,7 @@ const NoDataContainer = styled.div`
 const MonthlyUsageChart = ({ data, loading, error }) => {
   const [chartType, setChartType] = useState('line'); // 'line' or 'bar'
   const [isMobile, setIsMobile] = useState(false);
+  const [chartReady, setChartReady] = useState(false);
   
   // Use the sidebar resize hook for automatic chart resizing
   const { chartRef, triggerResize } = useSidebarResize({
@@ -421,6 +452,17 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
     // Cleanup
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Mark chart as ready after initial render
+  useEffect(() => {
+    if (!loading && !error && data) {
+      const timer = setTimeout(() => {
+        setChartReady(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [loading, error, data]);
 
   if (loading) {
     return (
@@ -544,6 +586,17 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
         animation: {
           duration: 0
         }
+      },
+      /* Prevent layout shift during data updates */
+      show: {
+        animations: {
+          x: {
+            from: 0
+          },
+          y: {
+            from: 0
+          }
+        }
       }
     },
     /* Optimize chart rendering */
@@ -641,7 +694,7 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
             size: isMobile ? 9 : 12,
             weight: 'bold'
           },
-          padding: isMobile ? 4 : 8
+          padding: isMobile ? 8 : 8
         }
       }
     },
@@ -712,16 +765,27 @@ const MonthlyUsageChart = ({ data, loading, error }) => {
           </Button>
         </ToggleContainer>
       </ChartHeader>
-      <ChartWrapper ref={chartRef} className="responsive-element">
+      <ChartWrapper 
+        ref={chartRef} 
+        className={`responsive-element ${!chartReady ? 'chart-not-ready' : ''}`}
+      >
         {chartType === 'line' ? (
           <Line 
             data={chartData} 
             options={options}
+            style={{
+              opacity: chartReady ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out'
+            }}
           />
         ) : (
           <Bar 
             data={chartData} 
             options={options}
+            style={{
+              opacity: chartReady ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out'
+            }}
           />
         )}
       </ChartWrapper>

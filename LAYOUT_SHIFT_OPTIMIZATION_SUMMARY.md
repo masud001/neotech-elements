@@ -21,6 +21,14 @@ This document summarizes the comprehensive layout shift optimizations implemente
 - **Issue**: Different heights at different breakpoints caused shifts
 - **Solution**: Consistent height progression across all responsive states
 
+### 5. Chart Header Layout Shifts
+- **Issue**: Chart header dimensions inconsistent across breakpoints
+- **Solution**: Fixed header heights and toggle button container dimensions
+
+### 6. Chart Rendering Transitions
+- **Issue**: Sudden chart appearance causing layout shifts
+- **Solution**: Smooth fade-in transitions with consistent container dimensions
+
 ## Implemented Solutions
 
 ### Dashboard Metrics Component
@@ -74,6 +82,31 @@ const LoadingContainer = styled.div`
   height: 300px;
   min-height: 300px;
   /* Responsive height matching */
+`;
+
+// Chart header with consistent dimensions
+const ChartHeader = styled.div`
+  min-height: 4rem;
+  height: 4rem;
+  
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 6rem;
+    height: 6rem;
+  }
+`;
+
+// Toggle container with fixed dimensions
+const ToggleContainer = styled.div`
+  min-height: 2.5rem;
+  height: 2.5rem;
+`;
+
+// Smooth chart transitions
+const ChartWrapper = styled.div`
+  &.chart-not-ready {
+    background: ${({ theme }) => theme.colors.primaryLight};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+  }
 `;
 ```
 
@@ -131,6 +164,12 @@ const triggerResize = useCallback(() => {
 - 300ms ease-out transitions for chart type changes
 - Prevents jarring layout shifts
 - Maintains visual continuity
+
+### Chart Rendering Stability
+- Smooth fade-in transitions for chart appearance
+- Consistent container dimensions during loading states
+- Chart-ready state management to prevent sudden shifts
+- Background placeholders during chart initialization
 
 ## Responsive Design Consistency
 

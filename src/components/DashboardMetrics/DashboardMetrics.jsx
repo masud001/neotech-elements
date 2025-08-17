@@ -1,6 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import styled from 'styled-components';
 import useChemicalData from '../../hooks/useChemicalData';
+import { LoadingSpinner } from '../UI';
 
 // Styled Components
 const MetricsContainer = styled.div`
@@ -237,7 +238,11 @@ const DashboardMetrics = () => {
   if (loading) {
     return (
       <LoadingContainer>
-        <div>Loading dashboard metrics...</div>
+        <LoadingSpinner 
+          size="large" 
+          color="primary" 
+          text="Loading dashboard metrics..." 
+        />
       </LoadingContainer>
     );
   }
