@@ -15,12 +15,9 @@
   -webkit-overflow-scrolling: touch;
   will-change: transform;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  /* Ensure sidebar stays sticky above content but below header */
   z-index: 1005;
-  /* Force hardware acceleration and ensure sticky positioning */
   transform: translateZ(0);
-  /* Additional sticky positioning properties */
-  position: -webkit-sticky; /* Safari support */
+  position: -webkit-sticky;
   position: sticky;
 }
 .user-info {
@@ -66,7 +63,6 @@
 }
 .sidebar-change {
   margin-left: -260px;
-  /* Ensure collapsed state works with sticky positioning */
   transform: translateX(-260px);
 }
 
@@ -86,15 +82,15 @@
   letter-spacing: 0.03em;
   border: 1px solid transparent;
   transition: var(--transition-default);
-  color: var(--clr-silver); /* Improved contrast for navigation text */
+  color: var(--clr-silver); 
 }
 .nav-link:hover {
   border: 1px solid var(--clr-primar-light);
-  color: var(--clr-white); /* Better contrast on hover */
+  color: var(--clr-white);
 }
 .nav-link.active {
   background-color: var(--clr-pumpkin);
-  color: var(--clr-white); /* Ensure white text on pumpkin background */
+  color: var(--clr-white); 
   box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
@@ -103,14 +99,14 @@
 }
 .nav-link-text {
   text-transform: capitalize;
-  color: inherit; /* Inherit color from parent for proper contrast */
+  color: inherit; 
 }
 
 
 @media screen and (max-width: 1400px) {
   .sidebar {
     padding: 24px 16px;
-    position: -webkit-sticky; /* Safari support */
+    position: -webkit-sticky; 
     position: sticky;
     top: 0;
     left: 0;
@@ -123,7 +119,7 @@
     width: 72px;
     padding-left: 12px;
     padding-right: 12px;
-    position: -webkit-sticky; /* Safari support */
+    position: -webkit-sticky; 
     position: sticky;
     top: 0;
     left: 0;
@@ -131,7 +127,7 @@
   }
   .sidebar-change {
     margin-left: -72px;
-    /* Ensure collapsed state works with sticky positioning */
+    
     transform: translateX(-72px);
   }
   .info-name {
@@ -164,7 +160,7 @@
 @media screen and (max-width: 420px) {
   .sidebar {
     margin-left: -72px;
-    position: -webkit-sticky; /* Safari support */
+    position: -webkit-sticky; 
     position: sticky;
     top: 0;
     left: 0;
@@ -172,7 +168,7 @@
   }
   .sidebar-change {
     margin-left: -72px;
-    /* Ensure collapsed state works with sticky positioning */
+    
     transform: translateX(-72px);
   }
 }

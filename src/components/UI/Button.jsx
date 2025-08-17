@@ -1,30 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-/**
- * Reusable Button component with multiple variants and sizes
- * 
- * @example
- * // Chart toggle buttons
- * <Button active={isActive} onClick={handleClick} variant="toggle">
- *   Chart Type
- * </Button>
- * 
- * // Generate Report button
- * <Button onClick={generateReport} variant="primary" size="large">
- *   Generate Report
- * </Button>
- * 
- * // Danger action button
- * <Button onClick={deleteItem} variant="danger" size="medium">
- *   Delete
- * </Button>
- * 
- * // Success action button
- * <Button onClick={saveItem} variant="success" size="small">
- *   Save
- * </Button>
- */
+
 const Button = ({ 
   children, 
   active = false, 
