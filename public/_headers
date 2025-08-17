@@ -1,12 +1,56 @@
 /*
+  # Security Headers
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  
+  # SEO and Performance Headers
+  X-DNS-Prefetch-Control: on
+  X-Robots-Tag: index, follow
+  
+  # Cache Control for HTML files
+  Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
+  # Cache static assets for 1 year
   Cache-Control: public, max-age=31536000, immutable
 
-*.html
-  Cache-Control: public, max-age=0, must-revalidate
+*.js
+  # Cache JavaScript files
+  Cache-Control: public, max-age=31536000, immutable
+
+*.css
+  # Cache CSS files
+  Cache-Control: public, max-age=31536000, immutable
+
+*.svg
+  # Cache SVG files
+  Cache-Control: public, max-age=31536000, immutable
+
+*.png
+  # Cache PNG images
+  Cache-Control: public, max-age=31536000, immutable
+
+*.jpg
+  # Cache JPG images
+  Cache-Control: public, max-age=31536000, immutable
+
+*.ico
+  # Cache favicon
+  Cache-Control: public, max-age=31536000, immutable
+
+# Sitemap and robots
+/sitemap.xml
+  Cache-Control: public, max-age=86400
+  Content-Type: application/xml
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain
+
+# Manifest
+/manifest.json
+  Cache-Control: public, max-age=86400
+  Content-Type: application/json

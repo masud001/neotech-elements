@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -18,6 +19,21 @@ export default defineConfig({
           styled: ['styled-components']
         }
       }
+    },
+    // Copy public files to build output
+    copyPublicDir: true
+  },
+  // Ensure public directory is properly served
+  publicDir: 'public',
+  // Server configuration for development
+  server: {
+    port: 3000,
+    open: true
+  },
+  // Resolve aliases
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src')
     }
   }
 })

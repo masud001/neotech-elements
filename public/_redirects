@@ -1,1 +1,7 @@
+# Static SEO files - must come BEFORE the SPA redirect
+/robots.txt    /robots.txt    200
+/sitemap.xml   /sitemap.xml  200
+/manifest.json /manifest.json 200
+
+# SPA redirect - must come AFTER static file handling
 /*    /index.html   200

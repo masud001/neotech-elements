@@ -21,7 +21,26 @@
   # Force npm to install dependencies
   NPM_CONFIG_PRODUCTION = "false"
 
-# Redirects for SPA (Single Page Application)
+# Static file handling - must come BEFORE the SPA redirect
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/manifest.json"
+  to = "/manifest.json"
+  status = 200
+  force = true
+
+# Redirects for SPA (Single Page Application) - must come AFTER static file handling
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -48,6 +67,25 @@
   for = "*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# Headers for SEO files
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Cache-Control = "public, max-age=86400"
 
 # Environment variables for different contexts
 [context.production.environment]
