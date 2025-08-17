@@ -8,7 +8,7 @@ import { useSidebar } from "../../context/SidebarContext";
 
 const ContentMain = memo(() => {
   const { data, loading, error } = useChemicalData();
-  const { isSidebarOpen } = useSidebar();
+  const { isSidebarOpen, collapseSidebar, isDesktop } = useSidebar();
   const containerRef = useRef(null);
 
   // Optimized resize handler with useCallback
@@ -38,6 +38,17 @@ const ContentMain = memo(() => {
     
     return () => clearTimeout(timer);
   }, [isSidebarOpen, handleResize]);
+
+  // Handle main content click to collapse sidebar (mobile only)
+  const handleMainContentClick = (e) => {
+    // Only collapse sidebar on mobile devices (less than 768px)
+    if (!isDesktop) {
+      // Only collapse if clicking on the main content holder itself
+      if (e.target === e.currentTarget || e.target.closest('.main-content-holder')) {
+        collapseSidebar();
+      }
+    }
+  };
 
   // Memoize sections to prevent unnecessary re-renders
   const dashboardSection = useMemo(() => (
@@ -70,7 +81,11 @@ const ContentMain = memo(() => {
   ), [data, loading, error]);
 
   return (
-    <MainContentHolder ref={containerRef} className='main-content-holder'>
+    <MainContentHolder 
+      ref={containerRef} 
+      className='main-content-holder'
+      onClick={handleMainContentClick}
+    >
       {dashboardSection}
       {monthlyUsageSection}
       {chartsSection}

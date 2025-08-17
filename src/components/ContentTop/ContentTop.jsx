@@ -7,7 +7,7 @@ import { useChemicalData } from "../../hooks/useChemicalData";
 import { Button } from "../UI";
 
 const ContentTop = () => {
-  const { toggleSidebar } = useContext(SidebarContext);
+  const { toggleSidebar, collapseSidebar, isDesktop } = useContext(SidebarContext);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const { data, loading, error } = useChemicalData();
 
@@ -19,11 +19,24 @@ const ContentTop = () => {
     setIsReportModalOpen(false);
   };
 
+  const handleHeaderClick = (e) => {
+    // Only collapse sidebar on mobile devices (less than 768px)
+    if (!isDesktop) {
+      // Only collapse if clicking on the header itself, not on buttons
+      if (e.target === e.currentTarget || e.target.closest('.dashboard-header')) {
+        collapseSidebar();
+      }
+    }
+  };
+
   return (
     <>
-      <MainContentTop className="dashboard-header">
+      <MainContentTop className="dashboard-header" onClick={handleHeaderClick}>
         <ContentTopLeft>
-          <SidebarToggler type="button" onClick={() => toggleSidebar()}>
+          <SidebarToggler type="button" onClick={(e) => {
+            e.stopPropagation(); // Prevent header click
+            toggleSidebar();
+          }}>
             <MenuIcon src={iconsImgs.menu} alt="Toggle sidebar" />
           </SidebarToggler>
           <ContentTopTitle>Home</ContentTopTitle>

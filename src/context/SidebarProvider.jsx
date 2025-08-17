@@ -47,6 +47,20 @@ const SidebarProvider = ({ children }) => {
     dispatch({ type: 'TOGGLE_SIDEBAR' });
   };
 
+  const expandSidebar = () => {
+    // Only expand if sidebar is currently closed
+    if (!state.isSidebarOpen) {
+      dispatch({ type: 'SET_SIDEBAR_STATE', payload: true });
+    }
+  };
+
+  const collapseSidebar = () => {
+    // Only collapse if sidebar is currently open
+    if (state.isSidebarOpen) {
+      dispatch({ type: 'SET_SIDEBAR_STATE', payload: false });
+    }
+  };
+
   const triggerChartResize = () => {
     // Trigger a window resize event to force all charts to resize
     window.dispatchEvent(new Event('resize'));
@@ -71,6 +85,8 @@ const SidebarProvider = ({ children }) => {
     <SidebarContext.Provider value={{ 
       ...state, 
       toggleSidebar,
+      expandSidebar,
+      collapseSidebar,
       triggerChartResize,
       isDesktop
     }}>

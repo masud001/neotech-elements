@@ -4,6 +4,8 @@ export const SidebarContext = createContext({
   isSidebarOpen: true,
   isDesktop: true,
   toggleSidebar: () => {},
+  expandSidebar: () => {},
+  collapseSidebar: () => {},
   triggerChartResize: () => {}
 });
 
