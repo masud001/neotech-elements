@@ -247,14 +247,14 @@ const ModalContent = styled.div`
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 98vw;
-    max-height: 95vh;
+    max-height: 85vh;
     border-radius: ${({ theme }) => theme.borderRadius.lg};
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 100vw;
     height: 100vh;
-    max-height: 100vh;
+    max-height: 85vh;
     border-radius: 0;
   }
 `;
